@@ -92,7 +92,7 @@ const musics = [
     year: 2007,
     artist: "Rihanna",
     imageUrl:
-        "https://cdns-images.dzcdn.net/images/cover/974997a0db8d1d0c2de1ebde4275997f/500x500.jpg",
+        "https://cdns-images.dzcdn.net/images/cover/91276466fbc876d96be9e6926060af60/350x350.jpg",
   ),
   MediaModel(
     title: "Paint it, Black",

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tp1/model/media_model.dart';
 
 class CustomListTile extends StatelessWidget {
-  final MediaModel medias;
-  const CustomListTile({super.key, required this.medias});
+  final MediaModel media;
+  final Function likedMediaCallback;
+  const CustomListTile(
+      {super.key, required this.media, required this.likedMediaCallback});
+
+  void _itemLiked() {
+    likedMediaCallback(media);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,7 @@ class CustomListTile extends StatelessWidget {
             ),
             SizedBox(
               height: 70,
-              child: Image.network(medias.imageUrl),
+              child: Image.network(media.imageUrl),
             ),
             const SizedBox(
               width: 10,
@@ -34,20 +39,20 @@ class CustomListTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    medias.title,
+                    media.title,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
                     ),
                   ),
-                  Text(medias.year.toString()),
-                  Text(medias.artist),
+                  Text(media.year.toString()),
+                  Text(media.artist),
                 ],
               ),
             ),
-            const IconButton(
-              onPressed: null,
-              icon: Icon(Icons.favorite_border_rounded),
+            IconButton(
+              onPressed: _itemLiked,
+              icon: const Icon(Icons.favorite_border_rounded),
             ),
             const SizedBox(
               width: 10,
