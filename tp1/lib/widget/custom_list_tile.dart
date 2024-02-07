@@ -30,7 +30,7 @@ class _CustomListTileState extends State<CustomListTile> {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.amber,
+          color: Theme.of(context).colorScheme.inversePrimary.withOpacity(0.25),
           borderRadius: BorderRadius.circular(10),
         ),
         height: 100,
@@ -66,6 +66,7 @@ class _CustomListTileState extends State<CustomListTile> {
             IconButton(
               onPressed: _itemLiked,
               icon: Icon(
+                color: Colors.amber[800],
                 widget.liked
                     ? Icons.favorite_rounded
                     : Icons.favorite_border_rounded,

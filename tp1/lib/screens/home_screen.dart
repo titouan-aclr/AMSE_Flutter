@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tp1/model/media_model.dart';
 import 'package:tp1/widget/custom_list_tile.dart';
 import 'package:tp1/widget/custom_navigation_bar.dart';
+import 'package:tp1/widget/filters_row.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
@@ -57,23 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           const SizedBox(height: 10),
-          Row(
-            children: [
-              const SizedBox(width: 30),
-              const Text('Filters : '),
-              OutlinedButton.icon(
-                onPressed: _toggleFilter,
-                icon: Icon(
-                  Icons.check,
-                  size: filterOn ? 20 : 0,
-                ),
-                label: const Text('Liked'),
-              ),
-            ],
+          FiltersRow(
+            toggleFilter: _toggleFilter,
+            filterOn: filterOn,
           ),
           Expanded(
             child: ListView.builder(
-                padding: const EdgeInsets.all(8),
                 itemCount: filterOn
                     ? likedMedias[_selectedIndex].length
                     : mediaType[_selectedIndex].length,
