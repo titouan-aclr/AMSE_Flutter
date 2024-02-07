@@ -1,0 +1,86 @@
+[
+    {
+        "films": [
+            {
+                "id": "1",
+                "title": "The Game",
+                "year": "1997",
+                "artist": "David Fincher"
+            },
+            {
+                "id": "2",
+                "title": "Shutter Island",
+                "year": "2010",
+                "artist": "Martin Scorcese"
+            },
+            {
+                "id": "3",
+                "title": "Cypher",
+                "year": "2003",
+                "artist": "Vincenzo Natali"
+            },
+            {
+                "id": "4",
+                "title": "Inception",
+                "year": "2010",
+                "artist": "Christopher Nolan"
+            }
+        ]
+    },
+    {
+        "series": [
+            {
+                "id": "1",
+                "title": "Game of Thrones",
+                "year": "2011",
+                "artist": "David Benioff"
+            },
+            {
+                "id": "2",
+                "title": "Friends",
+                "year": "1994",
+                "artist": "Marta Kauffman"
+            },
+            {
+                "id": "3",
+                "title": "The Office",
+                "year": "2005",
+                "artist": "Greg Daniels"
+            },
+            {
+                "id": "4",
+                "title": "The Big Bang Theory",
+                "year": "2007",
+                "artist": "Mark Cendrowski"
+            }
+        ]
+    },
+    {
+        "musics": [
+            {
+                "id": "1",
+                "title": "Let It Be",
+                "year": "1970",
+                "artist": "The Beatles"
+            },
+            {
+                "id": "2",
+                "title": "Natural",
+                "year": "2018",
+                "artist": "Imagine Dragons"
+            },
+            {
+                "id": "3",
+                "title": "Umbrella",
+                "year": "2007",
+                "artist": "Rihanna"
+            },
+            {
+                "id": "4",
+                "title": "Paint it, Black",
+                "year": "1966",
+                "artist": "The Rolling Stones"
+            }
+        ]
+    }
+]
