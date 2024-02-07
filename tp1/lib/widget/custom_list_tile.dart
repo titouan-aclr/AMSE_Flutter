@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:tp1/model/media_model.dart';
 
-class CustomListTile extends StatelessWidget {
+// ignore: must_be_immutable
+class CustomListTile extends StatefulWidget {
   final MediaModel media;
-  final Function likedMediaCallback;
-  const CustomListTile(
-      {super.key, required this.media, required this.likedMediaCallback});
+  final Function toggleMediaLikeCallback;
+  bool liked;
+  CustomListTile(
+      {super.key,
+      required this.media,
+      required this.toggleMediaLikeCallback,
+      required this.liked});
 
+  @override
+  State<CustomListTile> createState() => _CustomListTileState();
+}
+
+class _CustomListTileState extends State<CustomListTile> {
   void _itemLiked() {
-    likedMediaCallback(media);
+    setState(() {
+      widget.liked = !widget.liked;
+    });
+    widget.toggleMediaLikeCallback(widget.media);
   }
 
   @override
@@ -28,7 +41,7 @@ class CustomListTile extends StatelessWidget {
             ),
             SizedBox(
               height: 70,
-              child: Image.network(media.imageUrl),
+              child: Image.network(widget.media.imageUrl),
             ),
             const SizedBox(
               width: 10,
@@ -39,20 +52,24 @@ class CustomListTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    media.title,
+                    widget.media.title,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
                     ),
                   ),
-                  Text(media.year.toString()),
-                  Text(media.artist),
+                  Text(widget.media.year.toString()),
+                  Text(widget.media.artist),
                 ],
               ),
             ),
             IconButton(
               onPressed: _itemLiked,
-              icon: const Icon(Icons.favorite_border_rounded),
+              icon: Icon(
+                widget.liked
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_border_rounded,
+              ),
             ),
             const SizedBox(
               width: 10,
