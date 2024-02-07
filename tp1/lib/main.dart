@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tp1/widget/CustomListTile.dart';
+import 'package:tp1/model/media_model.dart';
+import 'package:tp1/widget/custom_list_tile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -46,19 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: ListView(
-        children: const <Widget>[
-          CustomListTile(text: "Test 1"),
-          CustomListTile(text: "Test 2"),
-          CustomListTile(text: "Test 3"),
-          CustomListTile(text: "Test 4"),
-          CustomListTile(text: "Test 5"),
-          CustomListTile(text: "Test 6"),
-          CustomListTile(text: "Test 7"),
-          CustomListTile(text: "Test 8"),
-          CustomListTile(text: "Test 9"),
-        ],
-      ),
+      body: ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: films.length,
+          itemBuilder: (BuildContext context, int index) {
+            return CustomListTile(medias: musics[index]);
+          }),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

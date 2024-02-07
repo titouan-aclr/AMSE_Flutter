@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tp1/model/media_model.dart';
 
 class CustomListTile extends StatelessWidget {
-  final String text;
-  const CustomListTile({super.key, required this.text});
+  final MediaModel medias;
+  const CustomListTile({super.key, required this.medias});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +24,7 @@ class CustomListTile extends StatelessWidget {
             SizedBox(
               height: 50,
               width: 50,
-              child: Image.network(
-                  'https://cdns-images.dzcdn.net/images/cover/974997a0db8d1d0c2de1ebde4275997f/350x350.jpg'),
+              child: Image.network(medias.imageUrl),
             ),
             const SizedBox(
               width: 10,
@@ -34,9 +34,15 @@ class CustomListTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(text),
-                  const Text("Year"),
-                  const Text("Artist"),
+                  Text(
+                    medias.title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
+                  ),
+                  Text(medias.year.toString()),
+                  Text(medias.artist),
                 ],
               ),
             ),
