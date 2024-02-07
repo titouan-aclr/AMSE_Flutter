@@ -33,6 +33,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  List<List<MediaModel>> mediaType = [films, series, musics];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -51,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: const EdgeInsets.all(8),
           itemCount: films.length,
           itemBuilder: (BuildContext context, int index) {
-            return CustomListTile(medias: musics[index]);
+            return CustomListTile(medias: mediaType[_selectedIndex][index]);
           }),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

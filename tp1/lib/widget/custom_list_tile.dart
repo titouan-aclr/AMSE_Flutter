@@ -22,8 +22,7 @@ class CustomListTile extends StatelessWidget {
               width: 10,
             ),
             SizedBox(
-              height: 50,
-              width: 50,
+              height: 70,
               child: Image.network(medias.imageUrl),
             ),
             const SizedBox(

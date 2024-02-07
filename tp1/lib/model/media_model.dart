@@ -17,28 +17,28 @@ const films = [
     year: 1997,
     artist: "David Fincher",
     imageUrl:
-        "https://fr.web.img3.acsta.net/c_310_420/medias/nmedia/00/02/21/28/19163163.jpg",
+        "https://m.media-amazon.com/images/S/pv-target-images/faf34e5a9231d9ab121848f46561a0cc8e87ee94a1fc94f0a808f81fcb080214.jpg",
   ),
   MediaModel(
     title: "Shutter Island",
     year: 2010,
     artist: "Martin Scorcese",
     imageUrl:
-        "https://fr.web.img4.acsta.net/medias/nmedia/18/69/96/84/19151192.jpg",
+        "https://m.media-amazon.com/images/I/81FNja+9-iL._AC_UF1000,1000_QL80_.jpg",
   ),
   MediaModel(
     title: "Cypher",
     year: 2003,
     artist: "Vincenzo Natali",
     imageUrl:
-        "https://fr.web.img6.acsta.net/medias/nmedia/00/02/53/17/affiche2.jpg",
+        "https://m.media-amazon.com/images/I/614m6RP5sIL._AC_UF1000,1000_QL80_.jpg",
   ),
   MediaModel(
     title: "Inception",
     year: 2010,
     artist: "Christopher Nolan",
     imageUrl:
-        "https://fr.web.img2.acsta.net/medias/nmedia/18/72/34/14/19476654.jpg",
+        "https://m.media-amazon.com/images/I/91Rc8cAmnAL._AC_UF1000,1000_QL80_.jpg",
   ),
 ];
 
@@ -48,14 +48,14 @@ const series = [
     year: 2011,
     artist: "David Benioff",
     imageUrl:
-        "https://fr.web.img3.acsta.net/c_310_420/pictures/23/01/03/14/13/0717778.jpg",
+        "https://m.media-amazon.com/images/I/71P+4DslKmL._AC_UF1000,1000_QL80_.jpg",
   ),
   MediaModel(
     title: "Friends",
     year: 1994,
     artist: "Marta Kauffman",
     imageUrl:
-        "https://fr.web.img2.acsta.net/pictures/18/11/13/14/05/2764761.jpg",
+        "https://m.media-amazon.com/images/I/81kL7SpTBjL._AC_UF1000,1000_QL80_.jpg",
   ),
   MediaModel(
     title: "The Office",
@@ -69,7 +69,7 @@ const series = [
     year: 2007,
     artist: "Mark Cendrowski",
     imageUrl:
-        "https://fr.web.img5.acsta.net/pictures/18/11/06/15/36/0408812.jpg",
+        "https://m.media-amazon.com/images/I/717Se+lZiOL._AC_UF1000,1000_QL80_.jpg",
   ),
 ];
 
