@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tp1/screens/AboutScreen.dart';
+import 'package:tp1/screens/about_screen.dart';
 import 'package:tp1/screens/home_screen.dart';
+import 'package:tp1/widget/custom_list_tile.dart';
 
 void main() {
   runApp(const MyApp());

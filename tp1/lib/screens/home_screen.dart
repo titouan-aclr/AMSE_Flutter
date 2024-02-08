@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tp1/model/media_model.dart';
 import 'package:tp1/widget/custom_list_tile.dart';
-import 'package:tp1/screens/AboutScreen.dart';
+import 'package:tp1/screens/about_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
