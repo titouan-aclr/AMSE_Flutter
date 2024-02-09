@@ -52,8 +52,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
+          backgroundColor: const Color(0xFF363636),
+          title: Row(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SizedBox(
+                      height: 30, child: Image.asset('images/logo.jpg'))),
+              const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text('CinéTime',
+                      style: TextStyle(color: Color(0xfff9f9f9))))
+            ],
+          ),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.quiz_rounded),
@@ -61,14 +72,17 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AboutScreen()),
+                  MaterialPageRoute(builder: (context) => const AboutScreen()),
                 );
               },
             )
           ]),
       body: Column(
         children: [
-          const SizedBox(height: 10),
+          Container(
+            height: 5,
+            color: const Color(0xFFFFD400),),
+          const SizedBox(height: 5),
           FiltersRow(
             toggleFilter: _toggleFilter,
             filterOn: filterOn,

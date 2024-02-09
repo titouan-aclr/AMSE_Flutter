@@ -56,6 +56,7 @@ class _CustomListTileState extends State<CustomListTile> {
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
+                      color: Color(0xfff9f9f9),
                     ),
                   ),
                   Text(widget.media.year.toString()),

@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'CinéTime',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: const Color(0xff363636),
         useMaterial3: true,
       ),
       initialRoute: '/home',
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           return const HomeScreen(title: 'CinéTime');
         },
         '/about': (BuildContext context) {
-          return AboutScreen();
+          return const AboutScreen();
         }
       },
     );
