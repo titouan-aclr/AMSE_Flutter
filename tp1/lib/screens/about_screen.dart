@@ -6,6 +6,7 @@ import 'package:tp1/model/media_model.dart';
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
 
+
   @override
   State<AboutScreen> createState() => _AboutScreenState();
   

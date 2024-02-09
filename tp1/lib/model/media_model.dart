@@ -40,6 +40,27 @@ const films = [
     imageUrl:
         "https://m.media-amazon.com/images/I/91Rc8cAmnAL._AC_UF1000,1000_QL80_.jpg",
   ),
+  MediaModel(
+    title: "Le gendarme de Saint-Tropez",
+    year: 1964,
+    artist: "Jean Girault",
+    imageUrl:
+        "https://i0.wp.com/cinedweller.com/wp-content/uploads/2020/04/le-gendarme-de-saint-tropez-affiche.jpg?fit=800%2C1105&ssl=1",
+  ),
+  MediaModel(
+    title: "Taxi 4",
+    year: 2007,
+    artist: "Luc Besson",
+    imageUrl:
+        "https://m.media-amazon.com/images/I/51-5b44If6L._UF1000,1000_QL80_.jpg",
+  ),
+  MediaModel(
+    title: "Harry Potter à l'école des sorciers",
+    year: 2001,
+    artist: "JK Rowling",
+    imageUrl:
+        "https://m.media-amazon.com/images/I/51DRGGGKSGL._AC_UF1000,1000_QL80_.jpg",
+  ),
 ];
 
 const series = [
@@ -100,5 +121,26 @@ const musics = [
     artist: "The Rolling Stones",
     imageUrl:
         "https://upload.wikimedia.org/wikipedia/en/5/58/Paint_It_Black_UK_sleeve.jpg",
+  ),
+  MediaModel(
+    title: "L'odeur de l'essence",
+    year: 2021,
+    artist: "Orelsan",
+    imageUrl:
+        "https://cdns-images.dzcdn.net/images/cover/b691ee9fae05c7cf96d9c3aae286de40/500x500.jpg",
+  ),
+  MediaModel(
+    title: "Summertime",
+    year: 1968,
+    artist: "Janis Joplin",
+    imageUrl:
+        "https://cdns-images.dzcdn.net/images/cover/18a728a4260e9e1cb706d111a132a85a/500x500.jpg",
+  ),
+  MediaModel(
+    title: "French Kiss",
+    year: 1966,
+    artist: "Chilly Gonzales",
+    imageUrl:
+        "https://m.media-amazon.com/images/I/71OrOFCYb5L._UF1000,1000_QL80_.jpg",
   ),
 ];
