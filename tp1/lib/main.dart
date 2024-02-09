@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           return const HomeScreen(title: 'CinéTime');
         },
         '/about': (BuildContext context) {
-          return const AboutScreen();
+          return AboutScreen();
         }
       },
     );
