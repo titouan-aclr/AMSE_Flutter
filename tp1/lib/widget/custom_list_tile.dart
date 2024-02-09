@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tp1/model/media_model.dart';
 
-class CustomListTile extends StatelessWidget {
-  final MediaModel medias;
-  const CustomListTile({super.key, required this.medias});
+// ignore: must_be_immutable
+class CustomListTile extends StatefulWidget {
+  final MediaModel media;
+  final Function toggleMediaLikeCallback;
+  bool liked;
+  CustomListTile(
+      {super.key,
+      required this.media,
+      required this.toggleMediaLikeCallback,
+      required this.liked});
+
+  @override
+  State<CustomListTile> createState() => _CustomListTileState();
+}
+
+class _CustomListTileState extends State<CustomListTile> {
+  void _itemLiked() {
+    setState(() {
+      widget.liked = !widget.liked;
+    });
+    widget.toggleMediaLikeCallback(widget.media);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +30,7 @@ class CustomListTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.amber,
+          color: Theme.of(context).colorScheme.inversePrimary.withOpacity(0.25),
           borderRadius: BorderRadius.circular(10),
         ),
         height: 100,
@@ -23,7 +41,7 @@ class CustomListTile extends StatelessWidget {
             ),
             SizedBox(
               height: 70,
-              child: Image.network(medias.imageUrl),
+              child: Image.network(widget.media.imageUrl),
             ),
             const SizedBox(
               width: 10,
@@ -34,20 +52,25 @@ class CustomListTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    medias.title,
+                    widget.media.title,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
                     ),
                   ),
-                  Text(medias.year.toString()),
-                  Text(medias.artist),
+                  Text(widget.media.year.toString()),
+                  Text(widget.media.artist),
                 ],
               ),
             ),
-            const IconButton(
-              onPressed: null,
-              icon: Icon(Icons.favorite_border_rounded),
+            IconButton(
+              onPressed: _itemLiked,
+              icon: Icon(
+                color: Colors.amber[800],
+                widget.liked
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_border_rounded,
+              ),
             ),
             const SizedBox(
               width: 10,

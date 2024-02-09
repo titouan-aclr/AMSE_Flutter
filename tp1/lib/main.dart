@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tp1/screens/about_screen.dart';
 import 'package:tp1/screens/home_screen.dart';
-import 'package:tp1/widget/custom_list_tile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'CinéTime',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/home',
       routes: {
         '/home': (BuildContext context) {
-          return const HomeScreen(title: 'Home Page');
+          return const HomeScreen(title: 'CinéTime');
         },
         '/about': (BuildContext context) {
           return const AboutScreen();
