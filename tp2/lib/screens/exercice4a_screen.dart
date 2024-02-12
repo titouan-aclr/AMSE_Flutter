@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:tp2/widgets/image_tile.dart';
 
 Tile tile = Tile(
-  imageURL: 'https://picsum.photos/512',
   factor: 0.3,
-  alignment: const Alignment(0, 0), // Au milieu de l'image
+  alignment: const Alignment(0, 0),
+  imageUrl: 'images/test_tiers.png',
 );
 
 class Exercice4a extends StatelessWidget {
@@ -27,8 +27,7 @@ class Exercice4a extends StatelessWidget {
                 child: createTileWidgetFrom(tile))),
         SizedBox(
             height: 200,
-            child:
-                Image.network('https://picsum.photos/512', fit: BoxFit.cover))
+            child: Image.asset('images/test_tiers.png', fit: BoxFit.cover))
       ])),
     );
   }

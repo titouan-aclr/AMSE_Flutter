@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tp2/screens/exercice5a_screen.dart';
 import 'package:tp2/screens/exercice5b_screen.dart';
 import 'package:tp2/screens/exercice4a_screen.dart';
+import 'package:tp2/screens/exercice5c_screen.dart';
 
 class ExerciceModel {
   final String title;
@@ -42,5 +43,10 @@ const exercices = [
     title: "Exercice 5b",
     description: 'GridView from builder example',
     page: Exercice5bScreen(),
+  ),
+  ExerciceModel(
+    title: "Exercice 5c",
+    description: 'GridView from image tile',
+    page: Exercice5cScreen(),
   ),
 ];

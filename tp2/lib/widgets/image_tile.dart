@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Tile {
-  String imageURL;
+  String imageUrl;
   double factor;
   Alignment alignment;
 
-  Tile({required this.imageURL, required this.factor, required this.alignment});
+  Tile({required this.imageUrl, required this.factor, required this.alignment});
 
   Widget croppedImageTile() {
     return FittedBox(
@@ -15,7 +15,7 @@ class Tile {
           alignment: alignment,
           widthFactor: factor,
           heightFactor: factor,
-          child: Image.network(imageURL),
+          child: Image.asset(imageUrl),
         ),
       ),
     );
