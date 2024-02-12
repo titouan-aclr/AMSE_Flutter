@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tp2/screens/exercice4a_screen.dart';
 
 class ExerciceModel {
   final String title;
@@ -24,5 +25,10 @@ const exercices = [
     title: "Exercice 2b",
     description: 'Animated rotate and scale image',
     page: Scaffold(body: Text("Exercice 2b")),
+  ),
+  ExerciceModel(
+    title: "Exercice 4a",
+    description: 'Display a tile',
+    page: Exercice4a(),
   ),
 ];
