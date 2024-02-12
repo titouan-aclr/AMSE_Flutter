@@ -46,7 +46,7 @@ class _AboutScreenState extends State<AboutScreen> {
                       height: 30, child: Image.asset('images/logo.jpg'))),
               const Padding(
                   padding: EdgeInsets.all(10),
-                  child: Text('Informations à propos de CinéTime',
+                  child: Text('A propos',
                       style: TextStyle(color: Color(0xfff9f9f9))))
             ],
           )),

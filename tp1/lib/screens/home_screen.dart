@@ -67,7 +67,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: <Widget>[
             IconButton(
-              icon: const Icon(Icons.quiz_rounded),
+              icon: const Icon(
+                Icons.quiz_rounded,
+                color: Colors.amber,
+              ),
               tooltip: 'Show App Informations',
               onPressed: () {
                 Navigator.push(
@@ -81,7 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Container(
             height: 5,
-            color: const Color(0xFFFFD400),),
+            color: const Color(0xFFFFD400),
+          ),
           const SizedBox(height: 5),
           FiltersRow(
             toggleFilter: _toggleFilter,
