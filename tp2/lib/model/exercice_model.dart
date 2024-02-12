@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tp2/screens/exercice5a_screen.dart';
+import 'package:tp2/screens/exercice5b_screen.dart';
 
 class ExerciceModel {
   final String title;
@@ -24,5 +26,15 @@ const exercices = [
     title: "Exercice 2b",
     description: 'Animated rotate and scale image',
     page: Scaffold(body: Text("Exercice 2b")),
+  ),
+  ExerciceModel(
+    title: "Exercice 5a",
+    description: 'GridView from count example',
+    page: Exercice5aScreen(),
+  ),
+  ExerciceModel(
+    title: "Exercice 5b",
+    description: 'GridView from builder example',
+    page: Exercice5bScreen(),
   ),
 ];
