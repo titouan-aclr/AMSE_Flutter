@@ -58,7 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                   padding: const EdgeInsets.all(10),
                   child: SizedBox(
-                      height: 30, child: Image.asset('images/logo.jpg'))),
+                      height: 30,
+                      child: Image.asset('assets/images/logo.jpg'))),
               const Padding(
                   padding: EdgeInsets.all(10),
                   child: Text('CinéTime',
