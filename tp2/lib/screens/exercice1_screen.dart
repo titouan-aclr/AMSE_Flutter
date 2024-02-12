@@ -18,7 +18,10 @@ class _Ex1ScreenState extends State<Exercice1> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Exercice 1"),
       ),
-        body: Image.network('https://picsum.photos/512/1024.jpg', width: screenWidth, height: screenHeight));
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.network('https://picsum.photos/512/1024.jpg', width: screenWidth, height: screenHeight),
+        ));
 
 
     //throw UnimplementedError();
