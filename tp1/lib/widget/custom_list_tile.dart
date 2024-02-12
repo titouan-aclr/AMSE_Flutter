@@ -56,6 +56,7 @@ class _CustomListTileState extends State<CustomListTile> {
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
+                      color: Color(0xfff9f9f9),
                     ),
                   ),
                   Text(widget.media.year.toString()),
@@ -66,7 +67,7 @@ class _CustomListTileState extends State<CustomListTile> {
             IconButton(
               onPressed: _itemLiked,
               icon: Icon(
-                color: Colors.amber[800],
+                color: Colors.amber,
                 widget.liked
                     ? Icons.favorite_rounded
                     : Icons.favorite_border_rounded,

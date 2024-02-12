@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'CinéTime',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: const Color(0xff363636),
         useMaterial3: true,
       ),
       initialRoute: '/home',
