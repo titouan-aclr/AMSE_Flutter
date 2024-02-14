@@ -3,6 +3,7 @@ import 'package:tp2/screens/exercice5a_screen.dart';
 import 'package:tp2/screens/exercice5b_screen.dart';
 import 'package:tp2/screens/exercice4a_screen.dart';
 import 'package:tp2/screens/exercice5c_screen.dart';
+import 'package:tp2/screens/exercice5d_screen.dart';
 
 class ExerciceModel {
   final String title;
@@ -46,7 +47,12 @@ const exercices = [
   ),
   ExerciceModel(
     title: "Exercice 5c",
-    description: 'GridView from image tile',
+    description: 'GridView from image tile fixed size',
     page: Exercice5cScreen(),
+  ),
+  ExerciceModel(
+    title: "Exercice 5d",
+    description: 'GridView from image tile variable size',
+    page: Exercice5dScreen(),
   ),
 ];
