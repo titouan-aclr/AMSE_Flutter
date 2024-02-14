@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class Exercice2 extends StatefulWidget {
@@ -9,11 +8,47 @@ class Exercice2 extends StatefulWidget {
   State<Exercice2> createState() => _Ex2ScreenState();
 }
 
-class _Ex2ScreenState extends State<Exercice2> {
-  //double angleRotation = 0; //Angles de rotation déterminés par les sliders
+class _Ex2ScreenState extends State<Exercice2>
+    with SingleTickerProviderStateMixin {
   double angleRotationX = 0;
   double angleRotationZ = 0;
-  double dimension = 10; 
+  double dimension = 1;
+ 
+  late AnimationController animations;
+
+  @override
+  void initState() {
+    super.initState();
+    animations = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 50))
+      ..addListener(() {
+        setState(() {
+          animation();
+        });
+        ();
+      });
+  }
+
+  void animation() {
+    if (angleRotationX + 0.1 <= 2 * pi) {
+      angleRotationX += 0.1;
+    } else {
+      angleRotationX = 0;
+    }
+    if (angleRotationZ - 0.2 >= 0) {
+      angleRotationZ -= 0.2;
+    } else {
+      angleRotationZ = 2 * pi;
+    }
+
+    if(dimension > 1){
+      dimension = 0.2;
+    }
+    else{
+      dimension +=0.05;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,17 +60,18 @@ class _Ex2ScreenState extends State<Exercice2> {
           children: [
             Transform(
                 transform: Matrix4.rotationX(angleRotationX)
-                  ..rotateZ(angleRotationZ)..scale(dimension),
-                  alignment: Alignment.center,
+                  ..rotateZ(angleRotationZ)
+                  ..scale(dimension),
+                alignment: Alignment.center,
                 //angle: angleRotation,
                 child: SizedBox(
                     height: 350,
                     width: 1000,
-                    child:
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 8),
-                          child: Image.network('https://picsum.photos/512/1024.jpg'),
-                        ))),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 8),
+                      child:
+                          Image.network('https://picsum.photos/512/1024.jpg'),
+                    ))),
             Row(
               children: [
                 const Padding(
@@ -92,7 +128,7 @@ class _Ex2ScreenState extends State<Exercice2> {
                     child: Slider(
                         value: dimension,
                         min: 0.1,
-                        max: 10,
+                        max: 2,
                         onChanged: (value) {
                           setState(() {
                             dimension = value;
@@ -102,6 +138,32 @@ class _Ex2ScreenState extends State<Exercice2> {
                 ),
               ],
             ),
+            Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text("Lancement de la cinématique :"),
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          if (animations.isAnimating) {
+                            animations.stop();
+                          } else {
+                            animations.repeat();
+                          }
+                        });
+                      },
+                      child: Text(
+                        animations.isAnimating
+                            ? 'Arrêter l\'animation'
+                            : 'Démarrer l\'animation',
+                      ),
+                    )),
+              ],
+            )
           ],
         ));
   }
