@@ -6,6 +6,8 @@ import 'package:tp2/screens/exercice5b_screen.dart';
 import 'package:tp2/screens/exercice4a_screen.dart';
 import 'package:tp2/screens/exercice5c_screen.dart';
 import 'package:tp2/screens/exercice5d_screen.dart';
+import 'package:tp2/screens/exercice6a_screen.dart';
+import 'package:tp2/screens/exercice6b_screen.dart';
 
 class ExerciceModel {
   final String title;
@@ -56,5 +58,15 @@ const exercices = [
     title: "Exercice 5d",
     description: 'GridView from image tile variable size',
     page: Exercice5dScreen(),
+  ),
+  ExerciceModel(
+    title: "Exercice 6a",
+    description: 'Invert two tiles',
+    page: Exercice6aScreen(),
+  ),
+  ExerciceModel(
+    title: "Exercice 6b",
+    description: 'Invert two tiles in a grid',
+    page: Exercice6bScreen(),
   ),
 ];
