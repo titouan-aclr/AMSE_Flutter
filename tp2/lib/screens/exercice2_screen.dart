@@ -13,6 +13,9 @@ class _Ex2ScreenState extends State<Exercice2>
   double angleRotationX = 0;
   double angleRotationZ = 0;
   double dimension = 1;
+  bool limite_X = false; 
+  bool limite_Z = false; 
+  bool limite_dim = false; 
  
   late AnimationController animations;
 
@@ -30,23 +33,50 @@ class _Ex2ScreenState extends State<Exercice2>
   }
 
   void animation() {
-    if (angleRotationX + 0.1 <= 2 * pi) {
-      angleRotationX += 0.1;
-    } else {
-      angleRotationX = 0;
+    double valueChangementX = 0.02; 
+    double valueChangementZ = 0.03; 
+    double valueChangementDim = 0.01; 
+
+
+    if (angleRotationX + valueChangementX < 2 * pi && limite_X == false) {
+      angleRotationX += valueChangementX;
+    } 
+    else if (angleRotationX - valueChangementX > 0 && limite_X == true){
+      angleRotationX -= valueChangementX;
     }
-    if (angleRotationZ - 0.2 >= 0) {
-      angleRotationZ -= 0.2;
-    } else {
-      angleRotationZ = 2 * pi;
+    else if(angleRotationX - valueChangementX < 0 && limite_X == true){
+      limite_X = false; 
+    }
+    else if (angleRotationX + valueChangementX > 2 * pi && limite_X == false) {
+      limite_X = true; 
     }
 
-    if(dimension > 1){
-      dimension = 0.2;
+    if (angleRotationZ + valueChangementZ < 2 * pi && limite_Z == false) {
+      angleRotationZ += valueChangementZ;
+    } 
+    else if (angleRotationZ - valueChangementZ > 0 && limite_Z == true){
+      angleRotationZ -= valueChangementZ;
     }
-    else{
-      dimension +=0.05;
+    else if(angleRotationZ - valueChangementZ < 0 && limite_Z == true){
+      limite_Z = false; 
     }
+    else if (angleRotationZ + valueChangementZ > 2 * pi && limite_Z == false) {
+      limite_Z = true; 
+    }
+
+    if (dimension + valueChangementDim < 1.5 && limite_dim == false) {
+      dimension += valueChangementDim;
+    } 
+    else if (dimension + valueChangementDim > 0.2 && limite_dim == true) {
+      dimension -= valueChangementDim;
+    } 
+    else if(dimension - valueChangementDim < 0.2 && limite_dim == true){
+      limite_dim = false; 
+    }
+    else if (dimension + valueChangementDim > 1.5 && limite_dim == false) {
+      limite_dim = true; 
+    }
+
   }
 
   @override
