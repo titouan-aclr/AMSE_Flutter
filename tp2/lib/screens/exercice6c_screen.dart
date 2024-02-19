@@ -44,34 +44,36 @@ class Exercice6cScreen extends StatefulWidget {
 
 class _Exercice6cScreenState extends State<Exercice6cScreen> {
   int nbColumns = 3;
-  late int itemCount;
+  late int itemCount = 9;
   int indexEmpty = 1;
   late List<Widget> tiles;
   TileWidget emptyTile = TileWidget(tile: Tile(Colors.white, "Empty"));
 
   @override
   void initState() {
-    itemCount = nbColumns * nbColumns;
-    super.initState();
-  }
-
-  List<Widget> populateList() {
-    List<Widget> tempTiles = List<Widget>.generate(
+    tiles = List<Widget>.generate(
         itemCount - 1,
         (index) =>
             TileWidget(tile: Tile(Colors.grey, "Tile ${index.toString()}")));
-    tempTiles.insert(indexEmpty, emptyTile);
-    return tempTiles;
+    tiles.insert(indexEmpty, emptyTile);
+    super.initState();
+  }
+
+  void populateList() {
+    tiles = List<Widget>.generate(
+        itemCount - 1,
+        (index) =>
+            TileWidget(tile: Tile(Colors.grey, "Tile ${index.toString()}")));
+    tiles.insert(indexEmpty, emptyTile);
   }
 
   @override
   Widget build(BuildContext context) {
-    tiles = populateList();
-
+    itemCount = nbColumns * nbColumns;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Invert two tiles with grid"),
+        title: const Text("Invert two tiles with sizable grid"),
       ),
       body: Column(
         children: [
@@ -103,10 +105,7 @@ class _Exercice6cScreenState extends State<Exercice6cScreen> {
           ),
           Slider(
             value: nbColumns.toDouble(),
-            onChanged: (newNbColumns) => setState(() {
-              nbColumns = newNbColumns.toInt();
-              itemCount = nbColumns * nbColumns;
-            }),
+            onChanged: (newNbColumns) => changeNbColumns(newNbColumns.toInt()),
             min: 2,
             divisions: 6,
             max: 8,
@@ -115,6 +114,15 @@ class _Exercice6cScreenState extends State<Exercice6cScreen> {
         ],
       ),
     );
+  }
+
+  changeNbColumns(int newNbColumns) {
+    setState(() {
+      nbColumns = newNbColumns;
+      itemCount = nbColumns * nbColumns;
+      if (indexEmpty >= itemCount) indexEmpty = 0;
+    });
+    populateList();
   }
 
   swapTiles(int index) {
