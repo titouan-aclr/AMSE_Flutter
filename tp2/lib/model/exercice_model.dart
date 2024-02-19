@@ -9,6 +9,7 @@ import 'package:tp2/screens/exercice5d_screen.dart';
 import 'package:tp2/screens/exercice6a_screen.dart';
 import 'package:tp2/screens/exercice6b_screen.dart';
 import 'package:tp2/screens/exercice6c_screen.dart';
+import 'package:tp2/screens/exercice7_screen.dart';
 
 class ExerciceModel {
   final String title;
@@ -26,14 +27,9 @@ const exercices = [
     page: Exercice1(),
   ),
   ExerciceModel(
-    title: "Exercice 2a",
-    description: 'Rotate and scale image',
+    title: "Exercice 2",
+    description: 'Rotate, scale and animate image',
     page: Exercice2(),
-  ),
-  ExerciceModel(
-    title: "Exercice 2b",
-    description: 'Animated rotate and scale image',
-    page: Scaffold(body: Text("Exercice 2b")),
   ),
   ExerciceModel(
     title: "Exercice 4a",
@@ -74,5 +70,10 @@ const exercices = [
     title: "Exercice 6c",
     description: 'Invert two tiles in a sizable grid',
     page: Exercice6cScreen(),
+  ),
+  ExerciceModel(
+    title: "Exercice 7",
+    description: 'Invert two tiles in a sizable grid',
+    page: Exercice7Screen(),
   ),
 ];

@@ -20,7 +20,7 @@ class _Ex2ScreenState extends State<Exercice2>
   void initState() {
     super.initState();
     animations = AnimationController(
-        vsync: this, duration: const Duration(seconds: 2))
+        vsync: this, duration: const Duration(milliseconds: 50))
       ..addListener(() {
         setState(() {
           animation();
