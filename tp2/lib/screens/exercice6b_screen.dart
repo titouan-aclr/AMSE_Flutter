@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:tp2/utils/utils.dart';
 
@@ -27,7 +29,6 @@ class TileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(2),
       color: tile.color,
       child: Center(child: Text(tile.label)),
     );
@@ -42,16 +43,18 @@ class Exercice6bScreen extends StatefulWidget {
 }
 
 class _Exercice6aScreenState extends State<Exercice6bScreen> {
-  List<Widget> tiles = List<Widget>.generate(
-      8,
-      (index) =>
-          TileWidget(tile: Tile(Colors.grey, "Tile ${index.toString()}")));
+  int itemCount = 9;
+  int indexEmpty = 1;
+  late List<Widget> tiles;
   TileWidget emptyTile = TileWidget(tile: Tile(Colors.white, "Empty"));
-  int emptyPosition = 1;
 
   @override
   void initState() {
-    tiles.insert(emptyPosition, emptyTile);
+    tiles = List<Widget>.generate(
+        itemCount - 1,
+        (index) =>
+            TileWidget(tile: Tile(Colors.grey, "Tile ${index.toString()}")));
+    tiles.insert(indexEmpty, emptyTile);
     super.initState();
   }
 
@@ -60,16 +63,24 @@ class _Exercice6aScreenState extends State<Exercice6bScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Invert two tiles"),
+        title: const Text("Invert two tiles with grid"),
       ),
       body: GridView.builder(
-        itemCount: 9,
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        itemCount: itemCount,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: sqrt(itemCount).toInt()),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
-            onTap: swapTiles(index),
-            child: tiles[index],
+            onTap: () => swapTiles(index),
+            child: Padding(
+              padding: const EdgeInsets.all(2),
+              child: Container(
+                color:
+                    _isAdjacent(index, indexEmpty) ? Colors.red : Colors.white,
+                padding: const EdgeInsets.all(5),
+                child: tiles[index],
+              ),
+            ),
           );
         },
       ),
@@ -77,14 +88,25 @@ class _Exercice6aScreenState extends State<Exercice6bScreen> {
   }
 
   swapTiles(int index) {
-    /*setState(() {
-      tiles.insert(1, tiles.removeAt(0));
-    });*/
-    print(index);
-    if (index == emptyPosition - 1 || index == emptyPosition + 1) {
-      print(tiles[index]);
-    } else {
-      print("wrong");
+    if (_isAdjacent(index, indexEmpty)) {
+      setState(() {
+        Widget tempo = tiles[index];
+        tiles[index] = emptyTile;
+        tiles[indexEmpty] = tempo;
+        indexEmpty = index;
+      });
     }
+  }
+
+  bool _isAdjacent(int index1, int index2) {
+    int nbColumn = sqrt(itemCount).toInt();
+
+    int row1 = index1 ~/ nbColumn;
+    int col1 = index1 % nbColumn;
+    int row2 = index2 ~/ nbColumn;
+    int col2 = index2 % nbColumn;
+
+    return (row1 == row2 && (col1 - col2).abs() == 1) ||
+        (col1 == col2 && (row1 - row2).abs() == 1);
   }
 }
