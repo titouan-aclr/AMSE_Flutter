@@ -49,6 +49,9 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   int indexEmpty = 1;
   late List<Widget> tiles;
   TileWidget emptyTile = TileWidget(tile: Tile(Colors.white, "Empty"));
+  bool isPlaying = false;
+
+  get onPressed => null;
 
   @override
   void initState() {
@@ -71,55 +74,91 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   @override
   Widget build(BuildContext context) {
     itemCount = nbColumns * nbColumns;
+
+    void togglePlayStop() {
+      setState(() {
+        isPlaying = !isPlaying;
+      });
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Invert two tiles with sizable grid"),
-      ),
-      body: Column(
-        children: [
-          Center(
-            child: Container(
-              height: 500,
-              padding: const EdgeInsets.all(20),
-              child: GridView.builder(
-                itemCount: itemCount,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: sqrt(itemCount).toInt()),
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    onTap: () => swapTiles(index),
-                    child: Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: Container(
-                        color: _isAdjacent(index, indexEmpty)
-                            ? Colors.red
-                            : Colors.white,
-                        padding: const EdgeInsets.all(5),
-                        child: tiles[index],
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text("Invert two tiles with sizable grid"),
+        ),
+        body: Column(
+          children: [
+            Center(
+              child: Container(
+                height: 500,
+                padding: const EdgeInsets.all(20),
+                child: GridView.builder(
+                  itemCount: itemCount,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: sqrt(itemCount).toInt()),
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () => swapTiles(index),
+                      child: Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: Container(
+                          color: _isAdjacent(index, indexEmpty)
+                              ? Colors.red
+                              : Colors.white,
+                          padding: const EdgeInsets.all(5),
+                          child: tiles[index],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
+            Slider(
+              value: nbColumns.toDouble(),
+              onChanged: (newNbColumns) =>
+                  changeNbColumns(newNbColumns.toInt()),
+              min: 2,
+              divisions: 6,
+              max: 8,
+              label: nbColumns.toString(),
+            )
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.white,
+          onPressed: () {
+            togglePlayStop();
+          },
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(45.0),
           ),
-          Slider(
-            value: nbColumns.toDouble(),
-            onChanged: (newNbColumns) => changeNbColumns(newNbColumns.toInt()),
-            min: 2,
-            divisions: 6,
-            max: 8,
-            label: nbColumns.toString(),
-          )
-        ],
-      ),
-      bottomNavigationBar: ConvexAppBar(items: const [
-        TabItem(icon: Icons.add_circle_outline),
-        TabItem(icon: Icons.play_arrow_outlined),
-        TabItem(icon: Icons.remove_circle_outline),
-      ]),
-    );
+          tooltip: isPlaying ? "Play" : "Stop",
+          child: isPlaying
+              ? const Icon(Icons.play_arrow_rounded)
+              : const Icon(Icons.stop_circle_rounded),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            IconButton(
+              onPressed: () {
+                changeNbColumns((nbColumns <= 2) ? nbColumns : nbColumns - 1);
+              },
+              icon: const Icon(Icons.remove),
+              tooltip: "Remove Tiles",
+            ),
+            IconButton(
+              onPressed: () {
+                changeNbColumns((nbColumns >= 8) ? nbColumns : nbColumns + 1);
+              },
+              icon: const Icon(Icons.add),
+              tooltip: "Add Tiles",
+            ),
+          ]),
+        ));
   }
 
   changeNbColumns(int newNbColumns) {
