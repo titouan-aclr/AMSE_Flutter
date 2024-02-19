@@ -39,10 +39,10 @@ class Exercice6bScreen extends StatefulWidget {
   const Exercice6bScreen({super.key});
 
   @override
-  State<Exercice6bScreen> createState() => _Exercice6aScreenState();
+  State<Exercice6bScreen> createState() => _Exercice6cScreenState();
 }
 
-class _Exercice6aScreenState extends State<Exercice6bScreen> {
+class _Exercice6cScreenState extends State<Exercice6bScreen> {
   int itemCount = 9;
   int indexEmpty = 1;
   late List<Widget> tiles;
