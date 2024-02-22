@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:tp2/screens/exercice4a_screen.dart';
 import 'package:tp2/utils/utils.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 // ==============
 // Models
@@ -50,6 +50,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   late List<Widget> tiles;
   TileWidget emptyTile = TileWidget(tile: Tile(Colors.white, "Empty"));
   bool isPlaying = false;
+  int difficulty = 5;
 
   get onPressed => null;
 
@@ -60,6 +61,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
         (index) =>
             TileWidget(tile: Tile(Colors.grey, "Tile ${index.toString()}")));
     tiles.insert(indexEmpty, emptyTile);
+    shuffleTilesDependingDifficulty(difficulty);
     super.initState();
   }
 
@@ -69,6 +71,69 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
         (index) =>
             TileWidget(tile: Tile(Colors.grey, "Tile ${index.toString()}")));
     tiles.insert(indexEmpty, emptyTile);
+  }
+
+  void shuffleTilesDependingDifficulty(int difficulty) {
+    for (int i = 0; i < difficulty; i++) {
+      int randomIndex2 = getRandomAdjacentIndex();
+      print("index choisi : ");
+      print(randomIndex2);
+      swapTiles(randomIndex2);
+    }
+  }
+
+  int getRandomAdjacentIndex() {
+    List<int> coordonnatesEmptyTile = recupRowColumnOfEmptyTile();
+    List<int> adjacentIndices = [];
+
+    // Haut
+    if (coordonnatesEmptyTile[0] > 0){
+      adjacentIndices.add(indexEmpty - nbColumns);
+    }
+      
+    // Bas
+    if (coordonnatesEmptyTile[0] < nbColumns - 1){
+      adjacentIndices.add(indexEmpty + nbColumns);
+    }
+      
+    // Gauche
+    if (coordonnatesEmptyTile[1] > 0){
+      adjacentIndices.add(indexEmpty - 1);
+    }
+    // Droite
+    if (coordonnatesEmptyTile[1] < nbColumns - 1){
+      adjacentIndices.add(indexEmpty + 1);
+    }
+  
+    var randomValue = Random().nextInt(adjacentIndices.length);
+    print(adjacentIndices);
+    return adjacentIndices[randomValue];
+    
+  }
+
+  List<int> recupRowColumnOfEmptyTile() {
+    int comparator = 0;
+    int effectiveRow = 0;
+    int effectiveColumn = 0;
+    int i =0; 
+
+    for (i; i < itemCount; i++) {
+      if (i == indexEmpty) {
+        for (int j = 0; j < nbColumns; j++) {
+          comparator += nbColumns;
+          if (i < comparator) {
+            effectiveColumn = (nbColumns * effectiveRow) - (nbColumns * effectiveRow - i);
+          } else {
+            effectiveRow += 1;
+          }
+        }
+      }
+    }
+    print("effecitive row ");
+    print(effectiveRow);
+    print("effecitive column ");
+    print(effectiveColumn);
+    return [effectiveRow, effectiveColumn];
   }
 
   @override
