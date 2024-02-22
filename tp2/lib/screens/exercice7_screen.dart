@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:tp2/screens/exercice4a_screen.dart';
 import 'package:tp2/utils/utils.dart';
 
 // ==============
@@ -88,42 +87,41 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     List<int> adjacentIndices = [];
 
     // Haut
-    if (coordonnatesEmptyTile[0] > 0){
+    if (coordonnatesEmptyTile[0] > 0) {
       adjacentIndices.add(indexEmpty - nbColumns);
     }
-      
+
     // Bas
-    if (coordonnatesEmptyTile[0] < nbColumns - 1){
+    if (coordonnatesEmptyTile[0] < nbColumns - 1) {
       adjacentIndices.add(indexEmpty + nbColumns);
     }
-      
+
     // Gauche
-    if (coordonnatesEmptyTile[1] > 0){
+    if (coordonnatesEmptyTile[1] > 0) {
       adjacentIndices.add(indexEmpty - 1);
     }
     // Droite
-    if (coordonnatesEmptyTile[1] < nbColumns - 1){
+    if (coordonnatesEmptyTile[1] < nbColumns - 1) {
       adjacentIndices.add(indexEmpty + 1);
     }
 
     var randomValue = Random().nextInt(adjacentIndices.length);
-    
+
     return adjacentIndices[randomValue];
-    
   }
 
   List<int> recupRowColumnOfEmptyTile() {
     int comparator = 0;
     int effectiveRow = 0;
     int effectiveColumn = 0;
-    int i =0; 
+    int i = 0;
 
     for (i; i < itemCount; i++) {
       if (i == indexEmpty) {
         for (int j = 0; j < nbColumns; j++) {
           comparator += nbColumns;
           if (i < comparator) {
-            effectiveColumn = i-nbColumns*effectiveRow;
+            effectiveColumn = i - nbColumns * effectiveRow;
           } else {
             effectiveRow += 1;
           }

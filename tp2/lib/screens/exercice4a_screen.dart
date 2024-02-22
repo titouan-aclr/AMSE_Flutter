@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tp2/widgets/image_tile.dart';
 
-Tile tile = Tile(
+ImageTile tile = ImageTile(
   factor: 0.3,
   alignment: const Alignment(0, 0),
   imageUrl: 'images/test_tiers.png',
@@ -32,7 +32,7 @@ class Exercice4a extends StatelessWidget {
     );
   }
 
-  Widget createTileWidgetFrom(Tile tile) {
+  Widget createTileWidgetFrom(ImageTile tile) {
     return InkWell(
       child: tile.croppedImageTile(),
       onTap: () {
