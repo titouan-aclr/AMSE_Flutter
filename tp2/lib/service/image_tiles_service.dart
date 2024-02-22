@@ -1,0 +1,58 @@
+import 'package:flutter/material.dart';
+import 'package:tp2/widgets/image_tile.dart';
+
+class ImageTileService {
+  List<ImageTile> tilesList = [];
+  int nbColumns = 3;
+  String imageUrl = 'images/test.jpg';
+
+  ImageTileService(String imgUrl, int nbOfColumns) {
+    imageUrl = imgUrl;
+    nbColumns = nbOfColumns;
+    _splitImageIntoTiles();
+  }
+
+  List<ImageTile> getTilesList() {
+    return tilesList;
+  }
+
+  void setTilesList(List<ImageTile> list) {
+    tilesList = list;
+  }
+
+  int getNbColumns() {
+    return nbColumns;
+  }
+
+  void setNbColumns(int nbOfColumns) {
+    nbColumns = nbOfColumns;
+    _splitImageIntoTiles();
+  }
+
+  List<double> _computeIndexes() {
+    List<double> result = [];
+    double temp = 0;
+
+    for (int i = 0; i < nbColumns; i++) {
+      temp = ((2 * i) / (nbColumns - 1)) - 1;
+      result.add(temp);
+    }
+    return result;
+  }
+
+  void _splitImageIntoTiles() {
+    List<double> indexes = _computeIndexes();
+
+    for (var y in indexes) {
+      for (var x in indexes) {
+        tilesList.add(
+          ImageTile(
+            factor: 1 / nbColumns,
+            alignment: Alignment(x, y),
+            imageUrl: imageUrl,
+          ),
+        );
+      }
+    }
+  }
+}
