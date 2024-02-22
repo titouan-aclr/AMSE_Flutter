@@ -61,7 +61,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
         (index) =>
             TileWidget(tile: Tile(Colors.grey, "Tile ${index.toString()}")));
     tiles.insert(indexEmpty, emptyTile);
-    shuffleTilesDependingDifficulty(difficulty);
+    shuffleTilesDependingOnDifficulty(difficulty);
     super.initState();
   }
 
@@ -71,9 +71,10 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
         (index) =>
             TileWidget(tile: Tile(Colors.grey, "Tile ${index.toString()}")));
     tiles.insert(indexEmpty, emptyTile);
+    shuffleTilesDependingOnDifficulty(difficulty);
   }
 
-  void shuffleTilesDependingDifficulty(int difficulty) {
+  void shuffleTilesDependingOnDifficulty(int difficulty) {
     for (int i = 0; i < difficulty; i++) {
       int randomIndex2 = getRandomAdjacentIndex();
       print("index choisi : ");
@@ -104,9 +105,9 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     if (coordonnatesEmptyTile[1] < nbColumns - 1){
       adjacentIndices.add(indexEmpty + 1);
     }
-  
+
     var randomValue = Random().nextInt(adjacentIndices.length);
-    print(adjacentIndices);
+    
     return adjacentIndices[randomValue];
     
   }
@@ -122,17 +123,13 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
         for (int j = 0; j < nbColumns; j++) {
           comparator += nbColumns;
           if (i < comparator) {
-            effectiveColumn = (nbColumns * effectiveRow) - (nbColumns * effectiveRow - i);
+            effectiveColumn = i-nbColumns*effectiveRow;
           } else {
             effectiveRow += 1;
           }
         }
       }
     }
-    print("effecitive row ");
-    print(effectiveRow);
-    print("effecitive column ");
-    print(effectiveColumn);
     return [effectiveRow, effectiveColumn];
   }
 
