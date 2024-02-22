@@ -42,6 +42,7 @@ class ImageTileService {
 
   void _splitImageIntoTiles() {
     List<double> indexes = _computeIndexes();
+    tilesList = [];
 
     for (var y in indexes) {
       for (var x in indexes) {

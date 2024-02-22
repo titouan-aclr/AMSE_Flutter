@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:tp2/service/image_tiles_service.dart';
 import 'package:tp2/widgets/image_tile.dart';
@@ -13,7 +11,6 @@ class Exercice6dScreen extends StatefulWidget {
 
 class _Exercice6cScreenState extends State<Exercice6dScreen> {
   int nbColumns = 3;
-  late int itemCount = 9;
   int indexEmpty = 1;
   late List<ImageTile> tiles;
   //ImageTile emptyTile = ImageTile(tile: Tile(Colors.white, "Empty"));
@@ -28,7 +25,6 @@ class _Exercice6cScreenState extends State<Exercice6dScreen> {
 
   @override
   Widget build(BuildContext context) {
-    itemCount = nbColumns * nbColumns;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -41,9 +37,9 @@ class _Exercice6cScreenState extends State<Exercice6dScreen> {
               height: 500,
               padding: const EdgeInsets.all(20),
               child: GridView.builder(
-                itemCount: itemCount,
+                itemCount: tiles.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: sqrt(itemCount).toInt()),
+                    crossAxisCount: nbColumns),
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     onTap: () => swapTiles(index),
@@ -78,8 +74,7 @@ class _Exercice6cScreenState extends State<Exercice6dScreen> {
   changeNbColumns(int newNbColumns) {
     setState(() {
       nbColumns = newNbColumns;
-      itemCount = nbColumns * nbColumns;
-      if (indexEmpty >= itemCount) indexEmpty = 0;
+      if (indexEmpty >= tiles.length) indexEmpty = 0;
       imageTileService.setNbColumns(nbColumns);
       tiles = imageTileService.getTilesList();
     });
