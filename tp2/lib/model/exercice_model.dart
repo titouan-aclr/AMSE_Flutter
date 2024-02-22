@@ -9,6 +9,7 @@ import 'package:tp2/screens/exercice5d_screen.dart';
 import 'package:tp2/screens/exercice6a_screen.dart';
 import 'package:tp2/screens/exercice6b_screen.dart';
 import 'package:tp2/screens/exercice6c_screen.dart';
+import 'package:tp2/screens/exercice6d_screen.dart';
 
 class ExerciceModel {
   final String title;
@@ -72,7 +73,12 @@ const exercices = [
   ),
   ExerciceModel(
     title: "Exercice 6c",
-    description: 'Invert two tiles in a sizable grid',
+    description: 'Invert tiles in a sizable grid',
     page: Exercice6cScreen(),
+  ),
+  ExerciceModel(
+    title: "Exercice 6d",
+    description: 'Invert tiles in a sizable image grid',
+    page: Exercice6dScreen(),
   ),
 ];

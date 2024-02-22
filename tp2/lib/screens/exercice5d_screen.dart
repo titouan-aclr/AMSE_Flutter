@@ -24,14 +24,14 @@ class _Exercice5dScreenState extends State<Exercice5dScreen> {
       return result;
     }
 
-    List<Tile> splitImageIntoTiles(String imageUrl) {
-      List<Tile> list = [];
+    List<ImageTile> splitImageIntoTiles(String imageUrl) {
+      List<ImageTile> list = [];
       List<double> indexes = computeIndexes();
 
       for (var y in indexes) {
         for (var x in indexes) {
           list.add(
-            Tile(
+            ImageTile(
               factor: 1 / NB_ELEMENTS,
               alignment: Alignment(x, y),
               imageUrl: imageUrl,
@@ -43,7 +43,7 @@ class _Exercice5dScreenState extends State<Exercice5dScreen> {
       return list;
     }
 
-    List<Tile> tiles = splitImageIntoTiles('images/test.jpg');
+    List<ImageTile> tiles = splitImageIntoTiles('images/test.jpg');
 
     return Scaffold(
       appBar: AppBar(
