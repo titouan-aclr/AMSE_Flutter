@@ -6,13 +6,13 @@ class Exercice5cScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Tile> splitImageIntoTiles(String imageUrl) {
-      List<Tile> list = [];
+    List<ImageTile> splitImageIntoTiles(String imageUrl) {
+      List<ImageTile> list = [];
 
       for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
           list.add(
-            Tile(
+            ImageTile(
               factor: 1 / 3,
               alignment: Alignment(j.toDouble(), i.toDouble()),
               imageUrl: imageUrl,
@@ -24,7 +24,7 @@ class Exercice5cScreen extends StatelessWidget {
       return list;
     }
 
-    List<Tile> tiles = splitImageIntoTiles('images/test.jpg');
+    List<ImageTile> tiles = splitImageIntoTiles('images/test.jpg');
 
     return Scaffold(
       appBar: AppBar(

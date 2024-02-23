@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Tile {
+class ImageTile {
   String imageUrl;
   double factor;
   Alignment alignment;
 
-  Tile({required this.imageUrl, required this.factor, required this.alignment});
+  ImageTile(
+      {required this.imageUrl, required this.factor, required this.alignment});
 
   Widget croppedImageTile() {
     return FittedBox(
