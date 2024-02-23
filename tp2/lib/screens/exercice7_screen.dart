@@ -51,6 +51,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   TileWidget emptyTile = TileWidget(tile: Tile(Colors.white, "Empty"));
   bool isPlaying = false;
   int difficulty = 5;
+  List<int> difficultyLevels = [5, 10, 15, 20];
 
   get onPressed => null;
 
@@ -77,8 +78,6 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   void shuffleTilesDependingOnDifficulty(int difficulty) {
     for (int i = 0; i < difficulty; i++) {
       int randomIndex2 = getRandomAdjacentIndex();
-      print("index choisi : ");
-      print(randomIndex2);
       swapTiles(randomIndex2);
     }
   }
@@ -88,42 +87,41 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     List<int> adjacentIndices = [];
 
     // Haut
-    if (coordonnatesEmptyTile[0] > 0){
+    if (coordonnatesEmptyTile[0] > 0) {
       adjacentIndices.add(indexEmpty - nbColumns);
     }
-      
+
     // Bas
-    if (coordonnatesEmptyTile[0] < nbColumns - 1){
+    if (coordonnatesEmptyTile[0] < nbColumns - 1) {
       adjacentIndices.add(indexEmpty + nbColumns);
     }
-      
+
     // Gauche
-    if (coordonnatesEmptyTile[1] > 0){
+    if (coordonnatesEmptyTile[1] > 0) {
       adjacentIndices.add(indexEmpty - 1);
     }
     // Droite
-    if (coordonnatesEmptyTile[1] < nbColumns - 1){
+    if (coordonnatesEmptyTile[1] < nbColumns - 1) {
       adjacentIndices.add(indexEmpty + 1);
     }
 
     var randomValue = Random().nextInt(adjacentIndices.length);
-    
+
     return adjacentIndices[randomValue];
-    
   }
 
   List<int> recupRowColumnOfEmptyTile() {
     int comparator = 0;
     int effectiveRow = 0;
     int effectiveColumn = 0;
-    int i =0; 
+    int i = 0;
 
     for (i; i < itemCount; i++) {
       if (i == indexEmpty) {
         for (int j = 0; j < nbColumns; j++) {
           comparator += nbColumns;
           if (i < comparator) {
-            effectiveColumn = i-nbColumns*effectiveRow;
+            effectiveColumn = i - nbColumns * effectiveRow;
           } else {
             effectiveRow += 1;
           }
@@ -219,6 +217,18 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
               icon: const Icon(Icons.add),
               tooltip: "Add Tiles",
             ),
+            DropdownButton(
+                items: difficultyLevels.map((item) {
+                  return DropdownMenuItem(
+                      value: item, child: Text(item.toString()));
+                }).toList(),
+                onChanged: (selectedValue) {
+                  setState(() {
+                    difficulty = int.parse(selectedValue as String);
+                    populateList();
+
+                  });
+                })
           ]),
         ));
   }
