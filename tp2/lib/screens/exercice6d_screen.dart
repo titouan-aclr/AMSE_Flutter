@@ -18,7 +18,7 @@ class _Exercice6cScreenState extends State<Exercice6dScreen> {
 
   @override
   void initState() {
-    imageTileService = ImageTileService('images/test.jpg', nbColumns);
+    imageTileService = ImageTileService();
     tiles = imageTileService.getTilesList();
     super.initState();
   }

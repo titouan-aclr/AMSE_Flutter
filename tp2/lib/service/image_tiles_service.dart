@@ -6,12 +6,12 @@ class ImageTileService {
   int nbColumns = 3;
   String imageUrl = 'images/test.jpg';
 
-  ImageTileService(String imgUrl, int nbOfColumns) {
-    imageUrl = imgUrl;
-    nbColumns = nbOfColumns;
+  /// CONSTRUCTOR
+  ImageTileService() {
     _splitImageIntoTiles();
   }
 
+  /// GETTERS AND SETTERS
   List<ImageTile> getTilesList() {
     return tilesList;
   }
@@ -38,6 +38,7 @@ class ImageTileService {
     _splitImageIntoTiles();
   }
 
+  /// GAME RULES
   List<double> _computeIndexes() {
     List<double> result = [];
     double temp = 0;
