@@ -29,6 +29,15 @@ class ImageTileService {
     _splitImageIntoTiles();
   }
 
+  String getImageUrl() {
+    return imageUrl;
+  }
+
+  void setImageUrl(String newImageUrl) {
+    imageUrl = newImageUrl;
+    _splitImageIntoTiles();
+  }
+
   List<double> _computeIndexes() {
     List<double> result = [];
     double temp = 0;

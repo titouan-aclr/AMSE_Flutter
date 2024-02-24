@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:tp2/service/image_tiles_service.dart';
+import 'package:tp2/widgets/image_selection.dart';
 import 'package:tp2/widgets/image_tile.dart';
 
 class Exercice7Screen extends StatefulWidget {
@@ -40,67 +41,68 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: const Text("Invert two tiles with sizable grid"),
-        ),
-        body: Column(
-          children: [
-            Center(
-              child: Container(
-                height: 500,
-                padding: const EdgeInsets.all(20),
-                child: GridView.builder(
-                  itemCount: tiles.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: nbColumns),
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                      onTap: () => swapTiles(index),
-                      child: Padding(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text("Invert two tiles with sizable grid"),
+      ),
+      body: Column(
+        children: [
+          Center(
+            child: Container(
+              height: 500,
+              padding: const EdgeInsets.all(20),
+              child: GridView.builder(
+                itemCount: tiles.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: nbColumns),
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    onTap: () => swapTiles(index),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2),
+                      child: Container(
+                        color: _isAdjacent(index, indexEmpty)
+                            ? Colors.red
+                            : Colors.white,
                         padding: const EdgeInsets.all(2),
-                        child: Container(
-                          color: _isAdjacent(index, indexEmpty)
-                              ? Colors.red
-                              : Colors.white,
-                          padding: const EdgeInsets.all(2),
-                          child: tiles[index].croppedImageTile(),
-                        ),
+                        child: tiles[index].croppedImageTile(),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
-            Slider(
-              value: nbColumns.toDouble(),
-              onChanged: (newNbColumns) =>
-                  changeNbColumns(newNbColumns.toInt()),
-              min: 2,
-              divisions: 6,
-              max: 8,
-              label: nbColumns.toString(),
-            )
-          ],
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.white,
-          onPressed: () {
-            togglePlayStop();
-          },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(45.0),
           ),
-          tooltip: isPlaying ? "Play" : "Stop",
-          child: isPlaying
-              ? const Icon(Icons.play_arrow_rounded)
-              : const Icon(Icons.stop_circle_rounded),
+          Slider(
+            value: nbColumns.toDouble(),
+            onChanged: (newNbColumns) => changeNbColumns(newNbColumns.toInt()),
+            min: 2,
+            divisions: 6,
+            max: 8,
+            label: nbColumns.toString(),
+          ),
+          ImageSelection(onImageChangeCallback: onImageChange),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        onPressed: () {
+          togglePlayStop();
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(45.0),
         ),
-        bottomNavigationBar: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        tooltip: isPlaying ? "Play" : "Stop",
+        child: isPlaying
+            ? const Icon(Icons.play_arrow_rounded)
+            : const Icon(Icons.stop_circle_rounded),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
             IconButton(
               onPressed: () {
                 changeNbColumns((nbColumns <= 2) ? nbColumns : nbColumns - 1);
@@ -126,8 +128,10 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
                     shuffleTilesDependingOnDifficulty(difficulty);
                   });
                 })
-          ]),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 
   changeNbColumns(int newNbColumns) {
@@ -215,5 +219,13 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
       }
     }
     return [effectiveRow, effectiveColumn];
+  }
+
+  void onImageChange(String newImageUrl) {
+    setState(() {
+      imageTileService.setImageUrl(newImageUrl);
+      tiles = imageTileService.getTilesList();
+      shuffleTilesDependingOnDifficulty(difficulty);
+    });
   }
 }
