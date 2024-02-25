@@ -15,12 +15,14 @@ class PuzzleGridState extends State<PuzzleGrid> {
   late List<ImageTile> tiles;
   int indexEmpty = 1;
   int difficulty = 30;
+  List difficultyLevels = ["Débutant", "Confirmé", "Expert", "Légende"];
   late ImageTileService imageTileService;
 
   @override
   void initState() {
     imageTileService = ImageTileService();
     tiles = imageTileService.getTilesList();
+    difficultyManagement(0);
     shuffleTilesDependingOnDifficulty(difficulty);
     super.initState();
   }
@@ -56,7 +58,8 @@ class PuzzleGridState extends State<PuzzleGrid> {
   }
 
   /// FUNCTIONS FOR SHUFFLE
-  void shuffleTilesDependingOnDifficulty(int difficulty) {
+  shuffleTilesDependingOnDifficulty(int difficulty) {
+    tiles = imageTileService.getTilesList();
     for (int i = 0; i < difficulty; i++) {
       int randomIndex2 = getRandomAdjacentIndex();
       swapTiles(randomIndex2);
@@ -167,4 +170,22 @@ class PuzzleGridState extends State<PuzzleGrid> {
       shuffleTilesDependingOnDifficulty(difficulty);
     });
   }
+
+  int difficultyManagement(int level){
+    int nbColumns = imageTileService.getNbColumns();
+    if(level == 0){
+      difficulty  =  nbColumns * 20;
+    }
+    if(level == 1){
+      difficulty  =  nbColumns * 60;
+    }
+    if(level == 2){
+      difficulty  =  nbColumns * 100;
+    }
+    if(level == 3){
+      difficulty  =  nbColumns * 500;
+    }
+    return difficulty;
+  }
+
 }

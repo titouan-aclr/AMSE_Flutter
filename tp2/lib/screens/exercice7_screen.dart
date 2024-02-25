@@ -4,6 +4,14 @@ import 'package:tp2/widgets/puzzle_grid.dart';
 
 final GlobalKey<PuzzleGridState> _puzzleGridKey = GlobalKey<PuzzleGridState>();
 
+const List<String> difficultyLevels = [
+  "Débutant",
+  "Confirmé",
+  "Expert",
+  "Légende"
+];
+String levelChoosen = difficultyLevels[0];
+
 class Exercice7Screen extends StatefulWidget {
   const Exercice7Screen({super.key});
 
@@ -27,6 +35,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +47,21 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
         children: [
           _puzzleGrid,
           ImageSelection(onImageChangeCallback: onImageChange),
+          DropdownButton(
+              value: levelChoosen,
+              items: difficultyLevels.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (value) {
+              setState(() {
+                    levelChoosen = value!;
+                  });
+              int newDifficulty = difficultyManagement(difficultyLevels.indexOf(value!));
+              shuffleTilesDependingOnDifficulty(newDifficulty);
+              })
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -86,4 +110,15 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   void removeColumn() {
     _puzzleGridKey.currentState?.removeColumn();
   }
+
+  int difficultyManagement(int level) {
+    int newDifficulty = _puzzleGridKey.currentState!.difficultyManagement(level);
+    return newDifficulty;
+    
+  }
+
+  void shuffleTilesDependingOnDifficulty(int difficulty){
+    _puzzleGridKey.currentState?.shuffleTilesDependingOnDifficulty(difficulty);
+  }
+
 }
