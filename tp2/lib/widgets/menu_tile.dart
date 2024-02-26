@@ -9,9 +9,9 @@ class MenuTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: const Icon(
-          Icons.account_balance_rounded,
-        ),
+        leading: exercice.title == "Jeu du Taquin"
+            ? const Icon(Icons.star_rounded, color: Colors.amber)
+            : const Icon(Icons.account_balance_rounded),
         title: Text(exercice.title),
         subtitle: Text(exercice.description),
         trailing: const Icon(Icons.play_arrow_rounded),

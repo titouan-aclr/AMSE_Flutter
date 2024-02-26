@@ -23,6 +23,11 @@ class ExerciceModel {
 
 const exercices = [
   ExerciceModel(
+    title: "Jeu du Taquin",
+    description: 'Véritable jeu du taquin',
+    page: Exercice7Screen(),
+  ),
+  ExerciceModel(
     title: "Exercice 1",
     description: 'Display image',
     page: Exercice1(),
@@ -76,10 +81,5 @@ const exercices = [
     title: "Exercice 6d",
     description: 'Invert tiles in a sizable image grid',
     page: Exercice6dScreen(),
-  ),
-  ExerciceModel(
-    title: "Exercice 7",
-    description: 'Invert two tiles in a sizable grid',
-    page: Exercice7Screen(),
   ),
 ];

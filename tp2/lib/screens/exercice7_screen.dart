@@ -29,9 +29,9 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   late ImageSelection _imageSelection;
   String levelChoosen = difficultyLevels[0];
   int scoreDisplay = SCORE_INITIAL;
-  final Stopwatch _chronometer = Stopwatch(); 
-  late Timer _timer = Timer(Duration.zero, () { });
-  String _timerDisplay = '00:00'; 
+  final Stopwatch _chronometer = Stopwatch();
+  late Timer _timer = Timer(Duration.zero, () {});
+  String _timerDisplay = '00:00';
 
   @override
   void initState() {
@@ -50,10 +50,9 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     });
     _puzzleGridKey.currentState!.togglePlayStop();
     _imageSelectionKey.currentState!.togglePlayStop();
-    if(_isPlaying){
+    if (_isPlaying) {
       startTimer();
-    }
-    else{
+    } else {
       stopTimer();
     }
   }
@@ -63,7 +62,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Invert two tiles with sizable grid"),
+        title: const Text("Jeu du Taquin"),
       ),
       body: Column(
         children: [
@@ -73,8 +72,15 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text('Score : $scoreDisplay',
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.secondary)),
-              Text('Timer : $_timerDisplay', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.secondary))
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.secondary)),
+              Text('Timer : $_timerDisplay',
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.secondary))
             ],
           ),
           const SizedBox(height: 10),
@@ -184,8 +190,10 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     stopTimer();
     showDialog(
       context: context,
-      builder: (BuildContext context) =>
-          SuccessDialog(score: scoreDisplay, chrono: _timerDisplay, resetGameCallback: resetGame),
+      builder: (BuildContext context) => SuccessDialog(
+          score: scoreDisplay,
+          chrono: _timerDisplay,
+          resetGameCallback: resetGame),
     );
   }
 
@@ -196,25 +204,26 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     resetTimer();
   }
 
-  void startTimer(){
-     _timer = Timer.periodic(const Duration(milliseconds: 500), (Timer t) { 
+  void startTimer() {
+    _timer = Timer.periodic(const Duration(milliseconds: 500), (Timer t) {
       setState(() {
-        _timerDisplay = '${_chronometer.elapsed.inMinutes.toString().padLeft(2, '0')}:${(_chronometer.elapsed.inSeconds % 60).toString().padLeft(2, '0')}';
+        _timerDisplay =
+            '${_chronometer.elapsed.inMinutes.toString().padLeft(2, '0')}:${(_chronometer.elapsed.inSeconds % 60).toString().padLeft(2, '0')}';
       });
-     });
-     _chronometer.start();
+    });
+    _chronometer.start();
   }
 
-  void stopTimer(){
+  void stopTimer() {
     _timer.cancel();
     _chronometer.stop();
   }
 
-  void resetTimer(){
+  void resetTimer() {
     stopTimer();
     _chronometer.reset();
     setState(() {
       _timerDisplay = "00:00";
-     });
+    });
   }
 }
