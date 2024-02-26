@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:tp2/widgets/image_tile.dart';
 
 ImageTile tile = ImageTile(
+  id: 0,
   factor: 0.3,
   alignment: const Alignment(0, 0),
   imageUrl: 'images/test_tiers.png',
+  empty: false,
 );
 
 class Exercice4a extends StatelessWidget {

@@ -53,16 +53,20 @@ class ImageTileService {
   void _splitImageIntoTiles() {
     List<double> indexes = _computeIndexes();
     _tilesList = [];
+    int id = 0;
 
     for (var y in indexes) {
       for (var x in indexes) {
         _tilesList.add(
           ImageTile(
+            id: id,
             factor: 1 / _nbColumns,
             alignment: Alignment(x, y),
             imageUrl: _imageUrl,
+            empty: false,
           ),
         );
+        id++;
       }
     }
   }

@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:tp2/service/image_tiles_service.dart';
 import 'package:tp2/widgets/image_tile.dart';
 
-const int scoreInitialValue = 10000;
-const int penality = 200;
+const int SCORE_INITIAL = 10000;
+const int PENALITY = 200;
 
 class PuzzleGrid extends StatefulWidget {
   final Function displayScoreCallback;
-  const PuzzleGrid({super.key, required this.displayScoreCallback});
+  final Function displaySuccessCallback;
+  const PuzzleGrid(
+      {super.key,
+      required this.displayScoreCallback,
+      required this.displaySuccessCallback});
 
   @override
   State<PuzzleGrid> createState() => PuzzleGridState();
@@ -16,19 +20,19 @@ class PuzzleGrid extends StatefulWidget {
 
 class PuzzleGridState extends State<PuzzleGrid> {
   late List<ImageTile> tiles;
+  late List<ImageTile> initialTiles;
   int indexEmpty = 1;
-  int difficulty = 30;
+  int difficulty = 60;
   bool isPlaying = false;
-  List difficultyLevels = ["Débutant", "Confirmé", "Expert", "Légende"];
   late ImageTileService imageTileService;
   late int score;
   late List<int> swapHistory = [];
-  late bool isGoingBack = false; 
+  late bool isGoingBack = false;
 
   @override
   void initState() {
     imageTileService = ImageTileService();
-    score = scoreInitialValue;
+    score = SCORE_INITIAL;
     updateDifficulty(0);
     super.initState();
   }
@@ -66,8 +70,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
   /// FUNCTIONS FOR SHUFFLE
   shuffleTilesDependingOnDifficulty(int difficulty) {
     if (isPlaying == false) {
-      tiles = imageTileService.getTilesList();
-      score = scoreInitialValue;
+      score = SCORE_INITIAL;
       for (int i = 0; i < difficulty; i++) {
         int randomIndex2 = getRandomAdjacentIndex();
         swapTiles(randomIndex2);
@@ -128,7 +131,6 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   /// FUNCTION FOR SWAPING TILES
   swapTiles(int index) {
-
     if (_isAdjacent(index, indexEmpty)) {
       setState(() {
         ImageTile tempo = tiles[indexEmpty];
@@ -138,10 +140,10 @@ class PuzzleGridState extends State<PuzzleGrid> {
       });
       if (isPlaying) {
         updateScore();
-        if(isGoingBack == false){
+        if (!isGoingBack) {
           swapHistory.add(index);
         }
-        
+        if (checkSuccess()) widget.displaySuccessCallback();
       }
     }
   }
@@ -160,10 +162,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
   /// FUNCTIONS FOR GAME FUNCTIONALITY
   onImageChange(String newImageUrl) {
     imageTileService.setImageUrl(newImageUrl);
-    setState(() {
-      tiles = imageTileService.getTilesList();
-      shuffleTilesDependingOnDifficulty(difficulty);
-    });
+    updatePuzzle();
   }
 
   addColumn() {
@@ -187,12 +186,16 @@ class PuzzleGridState extends State<PuzzleGrid> {
   updatePuzzle() {
     if (isPlaying == false) {
       setState(() {
-        tiles = imageTileService.getTilesList();
+        tiles = List.from(imageTileService.getTilesList());
         if (indexEmpty >= tiles.length) indexEmpty = 0;
+        int idEmpty = tiles[indexEmpty].id;
+        tiles[indexEmpty] = ImageTile(id: idEmpty, empty: true);
+        resetInitialTiles();
         shuffleTilesDependingOnDifficulty(difficulty);
         swapHistory = [];
       });
     }
+    score = SCORE_INITIAL;
   }
 
   void updateDifficulty(int level) {
@@ -220,7 +223,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   void updateScore() {
     if (isPlaying == true) {
-      score = score - penality;
+      score = score - PENALITY;
       widget.displayScoreCallback(score);
     }
   }
@@ -232,12 +235,30 @@ class PuzzleGridState extends State<PuzzleGrid> {
   }
 
   void goBackAction() {
-    isGoingBack = true; 
-    if (swapHistory.length > 1 && isPlaying) {
+    isGoingBack = true;
+    if (swapHistory.isNotEmpty && isPlaying) {
       swapTiles(swapHistory[swapHistory.length - 2]);
       swapHistory.removeLast();
       updateScore();
     }
-    isGoingBack = false; 
+    isGoingBack = false;
+  }
+
+  void resetInitialTiles() {
+    initialTiles = List.from(tiles);
+  }
+
+  bool checkSuccess() {
+    for (int i = 0; i < tiles.length; i++) {
+      if (tiles[i].id != initialTiles[i].id) return false;
+    }
+    return true;
+  }
+
+  void resetGame() {
+    indexEmpty = 1;
+    isPlaying = false;
+    score = SCORE_INITIAL;
+    updateDifficulty(0);
   }
 }

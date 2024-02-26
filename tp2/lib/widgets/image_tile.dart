@@ -1,24 +1,38 @@
 import 'package:flutter/material.dart';
 
 class ImageTile {
-  String imageUrl;
-  double factor;
-  Alignment alignment;
+  int id;
+  String? imageUrl;
+  double? factor;
+  Alignment? alignment;
+  bool empty;
 
-  ImageTile(
-      {required this.imageUrl, required this.factor, required this.alignment});
+  ImageTile({
+    required this.id,
+    this.imageUrl,
+    this.factor,
+    this.alignment,
+    required this.empty,
+  });
 
   Widget croppedImageTile() {
-    return FittedBox(
-      fit: BoxFit.fill,
-      child: ClipRect(
-        child: Align(
-          alignment: alignment,
-          widthFactor: factor,
-          heightFactor: factor,
-          child: Image.asset(imageUrl),
+    if (!empty) {
+      return FittedBox(
+        fit: BoxFit.fill,
+        child: ClipRect(
+          child: Align(
+            alignment: alignment!,
+            widthFactor: factor,
+            heightFactor: factor,
+            child: Image.asset(imageUrl!),
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return FittedBox(
+        fit: BoxFit.fill,
+        child: Container(color: Colors.white),
+      );
+    }
   }
 }

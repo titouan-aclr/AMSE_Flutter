@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tp2/widgets/image_selection.dart';
 import 'package:tp2/widgets/puzzle_grid.dart';
+import 'package:tp2/widgets/success_dialog.dart';
 
 final GlobalKey<PuzzleGridState> _puzzleGridKey = GlobalKey<PuzzleGridState>();
 final GlobalKey<ImageSelectionState> _imageSelectionKey =
@@ -21,24 +22,26 @@ class Exercice7Screen extends StatefulWidget {
 }
 
 class _Exercice7ScreenState extends State<Exercice7Screen> {
-  bool isPlaying = false;
+  bool _isPlaying = false;
   late PuzzleGrid _puzzleGrid;
   late ImageSelection _imageSelection;
   String levelChoosen = difficultyLevels[0];
-  int scoreDisplay = scoreInitialValue;
+  int scoreDisplay = SCORE_INITIAL;
 
   @override
   void initState() {
     super.initState();
-    _puzzleGrid =
-        PuzzleGrid(key: _puzzleGridKey, displayScoreCallback: displayScore);
+    _puzzleGrid = PuzzleGrid(
+        key: _puzzleGridKey,
+        displayScoreCallback: displayScore,
+        displaySuccessCallback: displaySuccess);
     _imageSelection = ImageSelection(
         key: _imageSelectionKey, onImageChangeCallback: onImageChange);
   }
 
   void togglePlayStop() {
     setState(() {
-      isPlaying = !isPlaying;
+      _isPlaying = !_isPlaying;
     });
     _puzzleGridKey.currentState!.togglePlayStop();
     _imageSelectionKey.currentState!.togglePlayStop();
@@ -64,7 +67,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
               );
             }).toList(),
             onChanged: (value) {
-              if (isPlaying == false) {
+              if (_isPlaying == false) {
                 setState(() {
                   levelChoosen = value!;
                 });
@@ -90,8 +93,8 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(45.0),
         ),
-        tooltip: isPlaying ? "Play" : "Stop",
-        child: isPlaying
+        tooltip: _isPlaying ? "Play" : "Stop",
+        child: _isPlaying
             ? const Icon(Icons.stop_circle_rounded)
             : const Icon(Icons.play_arrow_rounded),
       ),
@@ -111,9 +114,10 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
               tooltip: "Add Tiles",
             ),
             IconButton(
-                onPressed: goBackAction,
-                icon: const Icon(Icons.autorenew_rounded),
-                tooltip: "Revenir en arrière",)
+              onPressed: goBackAction,
+              icon: const Icon(Icons.autorenew_rounded),
+              tooltip: "Revenir en arrière",
+            )
           ],
         ),
       ),
@@ -144,5 +148,19 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
 
   void goBackAction() {
     _puzzleGridKey.currentState!.goBackAction();
+  }
+
+  void displaySuccess() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) =>
+          SuccessDialog(score: scoreDisplay, resetGameCallback: resetGame),
+    );
+  }
+
+  void resetGame() {
+    _isPlaying = false;
+    scoreDisplay = 0;
+    _puzzleGridKey.currentState!.resetGame();
   }
 }
