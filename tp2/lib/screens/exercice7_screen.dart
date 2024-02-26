@@ -10,6 +10,9 @@ const List<String> difficultyLevels = [
   "Expert",
   "Légende"
 ];
+
+int score =0;
+
 String levelChoosen = difficultyLevels[0];
 
 class Exercice7Screen extends StatefulWidget {
@@ -27,6 +30,13 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   void initState() {
     super.initState();
     _puzzleGrid = PuzzleGrid(key: _puzzleGridKey);
+    if (_puzzleGridKey.currentState != null) {
+      score = _puzzleGridKey.currentState!.score;
+    }
+    else {
+      score = 10000;
+    }
+    updateScore();
   }
 
   void togglePlayStop() {
@@ -34,6 +44,8 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
       isPlaying = !isPlaying;
     });
   }
+
+  
 
 
   @override
@@ -60,8 +72,10 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
                     levelChoosen = value!;
                   });
               int newDifficulty = difficultyManagement(difficultyLevels.indexOf(value!));
+              updatePuzzle();
               shuffleTilesDependingOnDifficulty(newDifficulty);
-              })
+              }),
+              Container(padding: const EdgeInsets.all(10), child: Text('SCORE : $score', style: TextStyle(fontSize: 40.0),)),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -120,5 +134,16 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   void shuffleTilesDependingOnDifficulty(int difficulty){
     _puzzleGridKey.currentState?.shuffleTilesDependingOnDifficulty(difficulty);
   }
+
+  void updateScore() {
+    setState(() {
+      score = _puzzleGridKey.currentState?.score ?? 0;
+    });
+  }
+
+  void updatePuzzle(){
+    _puzzleGridKey.currentState?.updatePuzzle();
+  }
+
 
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -17,11 +19,15 @@ class PuzzleGridState extends State<PuzzleGrid> {
   int difficulty = 30;
   List difficultyLevels = ["Débutant", "Confirmé", "Expert", "Légende"];
   late ImageTileService imageTileService;
+  late int score; 
+  int penality = 200; 
+  int score_initialValue = 10000;
 
   @override
   void initState() {
     imageTileService = ImageTileService();
     tiles = imageTileService.getTilesList();
+    score = score_initialValue;
     difficultyManagement(0);
     shuffleTilesDependingOnDifficulty(difficulty);
     super.initState();
@@ -60,6 +66,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
   /// FUNCTIONS FOR SHUFFLE
   shuffleTilesDependingOnDifficulty(int difficulty) {
     tiles = imageTileService.getTilesList();
+    score = score_initialValue;
     for (int i = 0; i < difficulty; i++) {
       int randomIndex2 = getRandomAdjacentIndex();
       swapTiles(randomIndex2);
@@ -126,6 +133,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
         tiles[index] = tempo;
         indexEmpty = index;
       });
+      getNewScore();
     }
   }
 
@@ -186,6 +194,13 @@ class PuzzleGridState extends State<PuzzleGrid> {
       difficulty  =  nbColumns * 500;
     }
     return difficulty;
+  }
+
+  int getNewScore(){
+    score = score -penality;
+    print("SCORE :");
+    print(score);
+    return score; 
   }
 
 }
