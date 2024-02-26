@@ -55,18 +55,25 @@ class PuzzleGridState extends State<PuzzleGrid> {
                   crossAxisCount: imageTileService.getNbColumns()),
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
-                  onTap: isPlaying ? () => swapTiles(index) : null,
+                  onTap:
+                      isPlaying ? () => swapTiles(index) : showNotPlayingToast,
                   child: Padding(
                     padding: const EdgeInsets.all(1),
-                    child: Container(
-                      color: _isAdjacent(index, indexEmpty)
-                          ? Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.7)
-                          : Colors.transparent,
-                      padding: const EdgeInsets.all(4),
-                      child: tiles[index].croppedImageTile(),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        color: _isAdjacent(index, indexEmpty)
+                            ? Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.7)
+                            : Colors.transparent,
+                        padding: const EdgeInsets.all(4),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: tiles[index].croppedImageTile(),
+                        ),
+                      ),
                     ),
                   ),
                 );
@@ -282,5 +289,12 @@ class PuzzleGridState extends State<PuzzleGrid> {
       score = SCORE_INITIAL;
       widget.displayScoreCallback(score);
     }
+  }
+
+  void showNotPlayingToast() {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Jeu en pause..."),
+      behavior: SnackBarBehavior.floating,
+    ));
   }
 }

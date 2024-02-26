@@ -95,11 +95,13 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
               );
             }).toList(),
             onChanged: (value) {
-              if (_isPlaying == false) {
+              if (!_isPlaying) {
                 setState(() {
                   levelChoosen = value!;
                 });
                 updateDifficulty(difficultyLevels.indexOf(value!));
+              } else {
+                showPlayingToast();
               }
             },
           ),
@@ -125,22 +127,22 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             IconButton(
-              onPressed: goBackToStart,
+              onPressed: _isPlaying ? goBackToStart : null,
               icon: const Icon(Icons.autorenew_rounded),
               tooltip: "Reset All",
             ),
             IconButton(
-              onPressed: removeColumn,
+              onPressed: _isPlaying ? showPlayingToast : removeColumn,
               icon: const Icon(Icons.remove),
               tooltip: "Remove Tiles",
             ),
             IconButton(
-              onPressed: addColumn,
+              onPressed: _isPlaying ? showPlayingToast : addColumn,
               icon: const Icon(Icons.add),
               tooltip: "Add Tiles",
             ),
             IconButton(
-              onPressed: goBackAction,
+              onPressed: _isPlaying ? goBackAction : showNotPlayingToast,
               icon: const Icon(Icons.undo_rounded),
               tooltip: "Go Back",
             ),
@@ -225,5 +227,19 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     setState(() {
       _timerDisplay = "00:00";
     });
+  }
+
+  void showPlayingToast() {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Vous ne pouvez pas modifier les paramètres en jeu..."),
+      behavior: SnackBarBehavior.floating,
+    ));
+  }
+
+  void showNotPlayingToast() {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Jeu en pause..."),
+      behavior: SnackBarBehavior.floating,
+    ));
   }
 }

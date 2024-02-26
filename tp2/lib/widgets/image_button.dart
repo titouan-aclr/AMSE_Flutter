@@ -17,7 +17,9 @@ class ImageButton extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        color: isSelected ? Colors.purple : Colors.white,
+        color: isSelected
+            ? Theme.of(context).colorScheme.primary.withOpacity(0.7)
+            : Colors.transparent,
         height: 100,
         child: InkWell(
           onTap: () => onPressedCallback(id),
