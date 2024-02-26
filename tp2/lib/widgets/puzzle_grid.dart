@@ -8,7 +8,11 @@ const int PENALITY = 200;
 
 class PuzzleGrid extends StatefulWidget {
   final Function displayScoreCallback;
-  const PuzzleGrid({super.key, required this.displayScoreCallback});
+  final Function displaySuccessCallback;
+  const PuzzleGrid(
+      {super.key,
+      required this.displayScoreCallback,
+      required this.displaySuccessCallback});
 
   @override
   State<PuzzleGrid> createState() => PuzzleGridState();
@@ -18,7 +22,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
   late List<ImageTile> tiles;
   late List<ImageTile> initialTiles;
   int indexEmpty = 1;
-  int difficulty = 30;
+  int difficulty = 60;
   bool isPlaying = false;
   late ImageTileService imageTileService;
   late int score;
@@ -28,7 +32,6 @@ class PuzzleGridState extends State<PuzzleGrid> {
     imageTileService = ImageTileService();
     score = SCORE_INITIAL;
     updateDifficulty(0);
-    resetInitialTiles();
     super.initState();
   }
 
@@ -135,7 +138,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
       });
       if (isPlaying) {
         updateScore();
-        print(checkSuccess());
+        if (checkSuccess()) widget.displaySuccessCallback();
       }
     }
   }
@@ -178,7 +181,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
   updatePuzzle() {
     if (isPlaying == false) {
       setState(() {
-        tiles = imageTileService.getTilesList();
+        tiles = List.from(imageTileService.getTilesList());
         if (indexEmpty >= tiles.length) indexEmpty = 0;
         int idEmpty = tiles[indexEmpty].id;
         tiles[indexEmpty] = ImageTile(id: idEmpty, empty: true);
@@ -234,5 +237,12 @@ class PuzzleGridState extends State<PuzzleGrid> {
       if (tiles[i].id != initialTiles[i].id) return false;
     }
     return true;
+  }
+
+  void resetGame() {
+    indexEmpty = 1;
+    isPlaying = false;
+    score = SCORE_INITIAL;
+    updateDifficulty(0);
   }
 }

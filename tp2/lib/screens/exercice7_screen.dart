@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tp2/widgets/image_selection.dart';
 import 'package:tp2/widgets/puzzle_grid.dart';
+import 'package:tp2/widgets/success_dialog.dart';
 
 final GlobalKey<PuzzleGridState> _puzzleGridKey = GlobalKey<PuzzleGridState>();
-final GlobalKey<ImageSelectionState> _imageSelectionKey = GlobalKey<ImageSelectionState>();
+final GlobalKey<ImageSelectionState> _imageSelectionKey =
+    GlobalKey<ImageSelectionState>();
 
 const List<String> difficultyLevels = [
   "Débutant",
@@ -20,7 +22,7 @@ class Exercice7Screen extends StatefulWidget {
 }
 
 class _Exercice7ScreenState extends State<Exercice7Screen> {
-  bool isPlaying = false;
+  bool _isPlaying = false;
   late PuzzleGrid _puzzleGrid;
   late ImageSelection _imageSelection;
   String levelChoosen = difficultyLevels[0];
@@ -29,18 +31,20 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   @override
   void initState() {
     super.initState();
-    _puzzleGrid =
-        PuzzleGrid(key: _puzzleGridKey, displayScoreCallback: displayScore);
-    _imageSelection = ImageSelection(key:_imageSelectionKey, onImageChangeCallback: onImageChange);
+    _puzzleGrid = PuzzleGrid(
+        key: _puzzleGridKey,
+        displayScoreCallback: displayScore,
+        displaySuccessCallback: displaySuccess);
+    _imageSelection = ImageSelection(
+        key: _imageSelectionKey, onImageChangeCallback: onImageChange);
   }
 
   void togglePlayStop() {
     setState(() {
-      isPlaying = !isPlaying;
+      _isPlaying = !_isPlaying;
     });
-    _puzzleGridKey.currentState!.togglePlayStop();   
+    _puzzleGridKey.currentState!.togglePlayStop();
     _imageSelectionKey.currentState!.togglePlayStop();
-     
   }
 
   @override
@@ -63,11 +67,11 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
               );
             }).toList(),
             onChanged: (value) {
-              if(isPlaying == false){
-              setState(() {
-                levelChoosen = value!;
-              });
-              updateDifficulty(difficultyLevels.indexOf(value!));
+              if (_isPlaying == false) {
+                setState(() {
+                  levelChoosen = value!;
+                });
+                updateDifficulty(difficultyLevels.indexOf(value!));
               }
             },
           ),
@@ -89,8 +93,8 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(45.0),
         ),
-        tooltip: isPlaying ? "Play" : "Stop",
-        child: isPlaying
+        tooltip: _isPlaying ? "Play" : "Stop",
+        child: _isPlaying
             ? const Icon(Icons.stop_circle_rounded)
             : const Icon(Icons.play_arrow_rounded),
       ),
@@ -135,5 +139,19 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     setState(() {
       scoreDisplay = score;
     });
+  }
+
+  void displaySuccess() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) =>
+          SuccessDialog(score: scoreDisplay, resetGameCallback: resetGame),
+    );
+  }
+
+  void resetGame() {
+    _isPlaying = false;
+    scoreDisplay = 0;
+    _puzzleGridKey.currentState!.resetGame();
   }
 }
