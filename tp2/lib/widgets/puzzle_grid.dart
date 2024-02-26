@@ -1,4 +1,3 @@
-
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:tp2/service/image_tiles_service.dart';
@@ -23,6 +22,8 @@ class PuzzleGridState extends State<PuzzleGrid> {
   List difficultyLevels = ["Débutant", "Confirmé", "Expert", "Légende"];
   late ImageTileService imageTileService;
   late int score;
+  late List<int> swapHistory = [];
+  late bool isGoingBack = false; 
 
   @override
   void initState() {
@@ -64,13 +65,13 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   /// FUNCTIONS FOR SHUFFLE
   shuffleTilesDependingOnDifficulty(int difficulty) {
-    if(isPlaying == false){
-    tiles = imageTileService.getTilesList();
-    score = scoreInitialValue;
-    for (int i = 0; i < difficulty; i++) {
-      int randomIndex2 = getRandomAdjacentIndex();
-      swapTiles(randomIndex2);
-    }
+    if (isPlaying == false) {
+      tiles = imageTileService.getTilesList();
+      score = scoreInitialValue;
+      for (int i = 0; i < difficulty; i++) {
+        int randomIndex2 = getRandomAdjacentIndex();
+        swapTiles(randomIndex2);
+      }
     }
   }
 
@@ -127,19 +128,22 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   /// FUNCTION FOR SWAPING TILES
   swapTiles(int index) {
-      if (_isAdjacent(index, indexEmpty)) {
-        setState(() {
-          ImageTile tempo = tiles[indexEmpty];
-          tiles[indexEmpty] = tiles[index];
-          tiles[index] = tempo;
-          indexEmpty = index;
-        });
-        if(isPlaying){
-          updateScore();
+
+    if (_isAdjacent(index, indexEmpty)) {
+      setState(() {
+        ImageTile tempo = tiles[indexEmpty];
+        tiles[indexEmpty] = tiles[index];
+        tiles[index] = tempo;
+        indexEmpty = index;
+      });
+      if (isPlaying) {
+        updateScore();
+        if(isGoingBack == false){
+          swapHistory.add(index);
         }
         
       }
-    
+    }
   }
 
   bool _isAdjacent(int index1, int index2) {
@@ -155,13 +159,11 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   /// FUNCTIONS FOR GAME FUNCTIONALITY
   onImageChange(String newImageUrl) {
-    
     imageTileService.setImageUrl(newImageUrl);
     setState(() {
       tiles = imageTileService.getTilesList();
       shuffleTilesDependingOnDifficulty(difficulty);
     });
-    
   }
 
   addColumn() {
@@ -188,9 +190,9 @@ class PuzzleGridState extends State<PuzzleGrid> {
         tiles = imageTileService.getTilesList();
         if (indexEmpty >= tiles.length) indexEmpty = 0;
         shuffleTilesDependingOnDifficulty(difficulty);
+        swapHistory = [];
       });
     }
-    score = scoreInitialValue;
   }
 
   void updateDifficulty(int level) {
@@ -227,5 +229,15 @@ class PuzzleGridState extends State<PuzzleGrid> {
     setState(() {
       isPlaying = !isPlaying;
     });
+  }
+
+  void goBackAction() {
+    isGoingBack = true; 
+    if (swapHistory.length > 1 && isPlaying) {
+      swapTiles(swapHistory[swapHistory.length - 2]);
+      swapHistory.removeLast();
+      updateScore();
+    }
+    isGoingBack = false; 
   }
 }

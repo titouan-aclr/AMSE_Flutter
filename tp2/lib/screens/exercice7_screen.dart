@@ -3,7 +3,8 @@ import 'package:tp2/widgets/image_selection.dart';
 import 'package:tp2/widgets/puzzle_grid.dart';
 
 final GlobalKey<PuzzleGridState> _puzzleGridKey = GlobalKey<PuzzleGridState>();
-final GlobalKey<ImageSelectionState> _imageSelectionKey = GlobalKey<ImageSelectionState>();
+final GlobalKey<ImageSelectionState> _imageSelectionKey =
+    GlobalKey<ImageSelectionState>();
 
 const List<String> difficultyLevels = [
   "Débutant",
@@ -24,23 +25,23 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   late PuzzleGrid _puzzleGrid;
   late ImageSelection _imageSelection;
   String levelChoosen = difficultyLevels[0];
-  int scoreDisplay = 0;
+  int scoreDisplay = scoreInitialValue;
 
   @override
   void initState() {
     super.initState();
     _puzzleGrid =
         PuzzleGrid(key: _puzzleGridKey, displayScoreCallback: displayScore);
-    _imageSelection = ImageSelection(key:_imageSelectionKey, onImageChangeCallback: onImageChange);
+    _imageSelection = ImageSelection(
+        key: _imageSelectionKey, onImageChangeCallback: onImageChange);
   }
 
   void togglePlayStop() {
     setState(() {
       isPlaying = !isPlaying;
     });
-    _puzzleGridKey.currentState!.togglePlayStop();   
+    _puzzleGridKey.currentState!.togglePlayStop();
     _imageSelectionKey.currentState!.togglePlayStop();
-     
   }
 
   @override
@@ -63,11 +64,11 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
               );
             }).toList(),
             onChanged: (value) {
-              if(isPlaying == false){
-              setState(() {
-                levelChoosen = value!;
-              });
-              updateDifficulty(difficultyLevels.indexOf(value!));
+              if (isPlaying == false) {
+                setState(() {
+                  levelChoosen = value!;
+                });
+                updateDifficulty(difficultyLevels.indexOf(value!));
               }
             },
           ),
@@ -109,6 +110,10 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
               icon: const Icon(Icons.add),
               tooltip: "Add Tiles",
             ),
+            IconButton(
+                onPressed: goBackAction,
+                icon: const Icon(Icons.autorenew_rounded),
+                tooltip: "Revenir en arrière",)
           ],
         ),
       ),
@@ -135,5 +140,9 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     setState(() {
       scoreDisplay = score;
     });
+  }
+
+  void goBackAction() {
+    _puzzleGridKey.currentState!.goBackAction();
   }
 }
