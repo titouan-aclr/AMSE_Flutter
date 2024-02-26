@@ -34,6 +34,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
     imageTileService = ImageTileService();
     score = SCORE_INITIAL;
     updateDifficulty(0);
+    swapHistory.add(indexEmpty);
     super.initState();
   }
 
@@ -192,10 +193,10 @@ class PuzzleGridState extends State<PuzzleGrid> {
         tiles[indexEmpty] = ImageTile(id: idEmpty, empty: true);
         resetInitialTiles();
         shuffleTilesDependingOnDifficulty(difficulty);
-        swapHistory = [];
+        swapHistory = [indexEmpty];
+        score = SCORE_INITIAL;
       });
     }
-    score = SCORE_INITIAL;
   }
 
   void updateDifficulty(int level) {
@@ -236,7 +237,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   void goBackAction() {
     isGoingBack = true;
-    if (swapHistory.isNotEmpty && isPlaying) {
+    if (swapHistory.length > 1 && isPlaying) {
       swapTiles(swapHistory[swapHistory.length - 2]);
       swapHistory.removeLast();
       updateScore();
@@ -257,7 +258,6 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   void resetGame() {
     indexEmpty = 1;
-    isPlaying = false;
     score = SCORE_INITIAL;
     updateDifficulty(0);
   }

@@ -159,8 +159,8 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   }
 
   void resetGame() {
-    _isPlaying = false;
-    scoreDisplay = 0;
+    togglePlayStop();
+    scoreDisplay = SCORE_INITIAL;
     _puzzleGridKey.currentState!.resetGame();
   }
 }
