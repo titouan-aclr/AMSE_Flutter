@@ -6,10 +6,10 @@ class ImageSelection extends StatefulWidget {
   const ImageSelection({super.key, required this.onImageChangeCallback});
 
   @override
-  State<ImageSelection> createState() => _ImageSelectionState();
+  State<ImageSelection> createState() => ImageSelectionState();
 }
 
-class _ImageSelectionState extends State<ImageSelection> {
+class ImageSelectionState extends State<ImageSelection> {
   List<String> imagesUrl = [
     'images/test.jpg',
     'images/test_tiers.png',
@@ -17,6 +17,7 @@ class _ImageSelectionState extends State<ImageSelection> {
   ];
   late List<ImageButton> list;
   int selectedImage = 0;
+  bool isPlaying = false; 
 
   @override
   void initState() {
@@ -45,10 +46,18 @@ class _ImageSelectionState extends State<ImageSelection> {
   }
 
   void onImageButtonPressed(int idSelected) {
+    if(!isPlaying) {
+      setState(() {
+        selectedImage = idSelected;
+        populateList();
+      });
+      widget.onImageChangeCallback(imagesUrl[idSelected]);
+    }
+  }
+
+  void togglePlayStop() {
     setState(() {
-      selectedImage = idSelected;
-      populateList();
+      isPlaying = !isPlaying;
     });
-    widget.onImageChangeCallback(imagesUrl[idSelected]);
   }
 }
