@@ -12,8 +12,8 @@ class ImageSelection extends StatefulWidget {
 class ImageSelectionState extends State<ImageSelection> {
   List<String> imagesUrl = [
     'images/test.jpg',
-    'images/test_tiers.png',
-    'images/test_quarts.png'
+    'images/montagne.jpg',
+    'images/dauphins.jpg'
   ];
   late List<ImageButton> list;
   int selectedImage = 0;

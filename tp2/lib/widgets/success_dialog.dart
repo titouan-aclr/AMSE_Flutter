@@ -20,7 +20,7 @@ class SuccessDialog extends StatelessWidget {
               style: TextStyle(fontSize: 40),
             ),
             const SizedBox(height: 20),
-            Image.asset('images/test.jpg', height: 200),
+            Image.asset('images/good_job_1.gif', height: 200),
             const SizedBox(height: 20),
             Text("Score : $score", style: const TextStyle(fontSize: 30)),
             const SizedBox(height: 20),

@@ -42,8 +42,8 @@ class PuzzleGridState extends State<PuzzleGrid> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: 500,
-        padding: const EdgeInsets.all(20),
+        height: 450,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: GridView.builder(
           itemCount: tiles.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

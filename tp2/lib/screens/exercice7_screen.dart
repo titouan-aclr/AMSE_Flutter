@@ -56,6 +56,17 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
       ),
       body: Column(
         children: [
+          const SizedBox(height: 50),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Score : $scoreDisplay',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.secondary)),
+              Text('Timer : XXX', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.secondary))
+            ],
+          ),
+          const SizedBox(height: 10),
           _puzzleGrid,
           _imageSelection,
           DropdownButton(
@@ -74,13 +85,6 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
                 updateDifficulty(difficultyLevels.indexOf(value!));
               }
             },
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: Text(
-              'SCORE : $scoreDisplay',
-              style: const TextStyle(fontSize: 40.0),
-            ),
           ),
         ],
       ),
@@ -155,7 +159,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     _puzzleGridKey.currentState!.goBackAction();
   }
 
-  void goBackToStart(){
+  void goBackToStart() {
     _puzzleGridKey.currentState!.goBackToStart();
   }
 
