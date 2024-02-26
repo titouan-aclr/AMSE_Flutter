@@ -197,6 +197,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
         score = SCORE_INITIAL;
       });
     }
+    score = SCORE_INITIAL;
   }
 
   void updateDifficulty(int level) {
@@ -258,7 +259,18 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   void resetGame() {
     indexEmpty = 1;
+    isPlaying = false;
     score = SCORE_INITIAL;
     updateDifficulty(0);
+  }
+
+  void goBackToStart() {
+    if (isPlaying) {
+      while (swapHistory.length > 1) {
+        goBackAction();
+      }
+      score = SCORE_INITIAL;
+      widget.displayScoreCallback(score);
+    }
   }
 }

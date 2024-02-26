@@ -104,6 +104,11 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             IconButton(
+              onPressed: goBackToStart,
+              icon: const Icon(Icons.autorenew_rounded),
+              tooltip: "Reset All",
+            ),
+            IconButton(
               onPressed: removeColumn,
               icon: const Icon(Icons.remove),
               tooltip: "Remove Tiles",
@@ -115,9 +120,9 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
             ),
             IconButton(
               onPressed: goBackAction,
-              icon: const Icon(Icons.autorenew_rounded),
-              tooltip: "Revenir en arrière",
-            )
+              icon: const Icon(Icons.undo_rounded),
+              tooltip: "Go Back",
+            ),
           ],
         ),
       ),
@@ -148,6 +153,10 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
 
   void goBackAction() {
     _puzzleGridKey.currentState!.goBackAction();
+  }
+
+  void goBackToStart(){
+    _puzzleGridKey.currentState!.goBackToStart();
   }
 
   void displaySuccess() {
