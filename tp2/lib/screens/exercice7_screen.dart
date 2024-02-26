@@ -22,18 +22,13 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   bool isPlaying = false;
   late PuzzleGrid _puzzleGrid;
   String levelChoosen = difficultyLevels[0];
-  int score = 0;
+  int scoreDisplay = 0;
 
   @override
   void initState() {
     super.initState();
-    _puzzleGrid = PuzzleGrid(key: _puzzleGridKey);
-    if (_puzzleGridKey.currentState != null) {
-      score = _puzzleGridKey.currentState!.score;
-    } else {
-      score = 10000;
-    }
-    updateScore();
+    _puzzleGrid =
+        PuzzleGrid(key: _puzzleGridKey, displayScoreCallback: displayScore);
   }
 
   void togglePlayStop() {
@@ -69,11 +64,12 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
             },
           ),
           Container(
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                'SCORE : $score',
-                style: TextStyle(fontSize: 40.0),
-              )),
+            padding: const EdgeInsets.all(10),
+            child: Text(
+              'SCORE : $scoreDisplay',
+              style: const TextStyle(fontSize: 40.0),
+            ),
+          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -127,9 +123,9 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     _puzzleGridKey.currentState!.updateDifficulty(level);
   }
 
-  void updateScore() {
+  void displayScore(int score) {
     setState(() {
-      score = _puzzleGridKey.currentState?.score ?? 0;
+      scoreDisplay = score;
     });
   }
 }

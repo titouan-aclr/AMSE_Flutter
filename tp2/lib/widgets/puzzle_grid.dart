@@ -7,9 +7,11 @@ import 'package:tp2/service/image_tiles_service.dart';
 import 'package:tp2/widgets/image_tile.dart';
 
 const int scoreInitialValue = 10000;
+const int penality = 200;
 
 class PuzzleGrid extends StatefulWidget {
-  const PuzzleGrid({super.key});
+  final Function displayScoreCallback;
+  const PuzzleGrid({super.key, required this.displayScoreCallback});
 
   @override
   State<PuzzleGrid> createState() => PuzzleGridState();
@@ -22,15 +24,12 @@ class PuzzleGridState extends State<PuzzleGrid> {
   List difficultyLevels = ["Débutant", "Confirmé", "Expert", "Légende"];
   late ImageTileService imageTileService;
   late int score;
-  int penality = 200;
 
   @override
   void initState() {
     imageTileService = ImageTileService();
-    tiles = imageTileService.getTilesList();
     score = scoreInitialValue;
     updateDifficulty(0);
-    shuffleTilesDependingOnDifficulty(difficulty);
     super.initState();
   }
 
@@ -134,7 +133,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
         tiles[index] = tempo;
         indexEmpty = index;
       });
-      getNewScore();
+      //updateScore();
     }
   }
 
@@ -203,10 +202,10 @@ class PuzzleGridState extends State<PuzzleGrid> {
     updatePuzzle();
   }
 
-  int getNewScore() {
+  void updateScore() {
     score = score - penality;
     print("SCORE :");
     print(score);
-    return score;
+    widget.displayScoreCallback(score);
   }
 }
