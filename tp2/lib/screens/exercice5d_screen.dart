@@ -32,6 +32,7 @@ class _Exercice5dScreenState extends State<Exercice5dScreen> {
         for (var x in indexes) {
           list.add(
             ImageTile(
+              id: 0,
               factor: 1 / NB_ELEMENTS,
               alignment: Alignment(x, y),
               imageUrl: imageUrl,

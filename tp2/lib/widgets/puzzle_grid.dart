@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:tp2/service/image_tiles_service.dart';
 import 'package:tp2/widgets/image_tile.dart';
 
-const int scoreInitialValue = 10000;
-const int penality = 200;
+const int SCORE_INITIAL = 10000;
+const int PENALITY = 200;
 
 class PuzzleGrid extends StatefulWidget {
   final Function displayScoreCallback;
@@ -19,17 +19,18 @@ class PuzzleGrid extends StatefulWidget {
 
 class PuzzleGridState extends State<PuzzleGrid> {
   late List<ImageTile> tiles;
+  late List<ImageTile> initialTiles;
   int indexEmpty = 1;
   int difficulty = 30;
-  List difficultyLevels = ["Débutant", "Confirmé", "Expert", "Légende"];
   late ImageTileService imageTileService;
   late int score;
 
   @override
   void initState() {
     imageTileService = ImageTileService();
-    score = scoreInitialValue;
+    score = SCORE_INITIAL;
     updateDifficulty(0);
+    resetInitialTiles();
     super.initState();
   }
 
@@ -65,7 +66,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   /// FUNCTIONS FOR SHUFFLE
   shuffleTilesDependingOnDifficulty(int difficulty) {
-    score = scoreInitialValue;
+    score = SCORE_INITIAL;
     for (int i = 0; i < difficulty; i++) {
       int randomIndex2 = getRandomAdjacentIndex();
       swapTiles(randomIndex2);
@@ -133,6 +134,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
         indexEmpty = index;
       });
       //updateScore();
+      //checkSuccess();
     }
   }
 
@@ -171,8 +173,9 @@ class PuzzleGridState extends State<PuzzleGrid> {
     setState(() {
       tiles = imageTileService.getTilesList();
       if (indexEmpty >= tiles.length) indexEmpty = 0;
-      tiles[indexEmpty] = ImageTile(empty: true);
-      shuffleTilesDependingOnDifficulty(difficulty);
+      int idEmpty = tiles[indexEmpty].id;
+      tiles[indexEmpty] = ImageTile(id: idEmpty, empty: true);
+      //shuffleTilesDependingOnDifficulty(difficulty);
     });
   }
 
@@ -200,9 +203,21 @@ class PuzzleGridState extends State<PuzzleGrid> {
   }
 
   void updateScore() {
-    score = score - penality;
+    score = score - PENALITY;
     print("SCORE :");
     print(score);
     widget.displayScoreCallback(score);
+  }
+
+  void resetInitialTiles() {
+    initialTiles = List.from(tiles);
+  }
+
+  bool checkSuccess() {
+    for (int i = 0; i < tiles.length; i++) {
+      print("TIles : ${tiles[i].id} et init : ${initialTiles[i].id}");
+      if (tiles[i].id != initialTiles[i].id) return false;
+    }
+    return true;
   }
 }

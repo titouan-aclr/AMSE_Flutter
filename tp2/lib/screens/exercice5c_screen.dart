@@ -13,6 +13,7 @@ class Exercice5cScreen extends StatelessWidget {
         for (int j = -1; j <= 1; j++) {
           list.add(
             ImageTile(
+              id: 0,
               factor: 1 / 3,
               alignment: Alignment(j.toDouble(), i.toDouble()),
               imageUrl: imageUrl,

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ImageTile {
+  int id;
   String? imageUrl;
   double? factor;
   Alignment? alignment;
   bool empty;
 
   ImageTile({
+    required this.id,
     this.imageUrl,
     this.factor,
     this.alignment,
