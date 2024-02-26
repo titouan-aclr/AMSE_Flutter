@@ -5,6 +5,7 @@ ImageTile tile = ImageTile(
   factor: 0.3,
   alignment: const Alignment(0, 0),
   imageUrl: 'images/test_tiers.png',
+  empty: false,
 );
 
 class Exercice4a extends StatelessWidget {

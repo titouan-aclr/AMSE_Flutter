@@ -65,7 +65,6 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   /// FUNCTIONS FOR SHUFFLE
   shuffleTilesDependingOnDifficulty(int difficulty) {
-    tiles = imageTileService.getTilesList();
     score = scoreInitialValue;
     for (int i = 0; i < difficulty; i++) {
       int randomIndex2 = getRandomAdjacentIndex();
@@ -151,10 +150,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
   /// FUNCTIONS FOR GAME FUNCTIONALITY
   onImageChange(String newImageUrl) {
     imageTileService.setImageUrl(newImageUrl);
-    setState(() {
-      tiles = imageTileService.getTilesList();
-      shuffleTilesDependingOnDifficulty(difficulty);
-    });
+    updatePuzzle();
   }
 
   addColumn() {
@@ -175,6 +171,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
     setState(() {
       tiles = imageTileService.getTilesList();
       if (indexEmpty >= tiles.length) indexEmpty = 0;
+      tiles[indexEmpty] = ImageTile(empty: true);
       shuffleTilesDependingOnDifficulty(difficulty);
     });
   }

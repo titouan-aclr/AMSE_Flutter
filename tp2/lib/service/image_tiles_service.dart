@@ -61,6 +61,7 @@ class ImageTileService {
             factor: 1 / _nbColumns,
             alignment: Alignment(x, y),
             imageUrl: _imageUrl,
+            empty: false,
           ),
         );
       }

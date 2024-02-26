@@ -16,6 +16,7 @@ class Exercice5cScreen extends StatelessWidget {
               factor: 1 / 3,
               alignment: Alignment(j.toDouble(), i.toDouble()),
               imageUrl: imageUrl,
+              empty: false,
             ),
           );
         }

@@ -35,6 +35,7 @@ class _Exercice5dScreenState extends State<Exercice5dScreen> {
               factor: 1 / NB_ELEMENTS,
               alignment: Alignment(x, y),
               imageUrl: imageUrl,
+              empty: false,
             ),
           );
         }
