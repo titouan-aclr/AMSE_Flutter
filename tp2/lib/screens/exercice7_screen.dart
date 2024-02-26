@@ -3,6 +3,7 @@ import 'package:tp2/widgets/image_selection.dart';
 import 'package:tp2/widgets/puzzle_grid.dart';
 
 final GlobalKey<PuzzleGridState> _puzzleGridKey = GlobalKey<PuzzleGridState>();
+final GlobalKey<ImageSelectionState> _imageSelectionKey = GlobalKey<ImageSelectionState>();
 
 const List<String> difficultyLevels = [
   "Débutant",
@@ -21,6 +22,7 @@ class Exercice7Screen extends StatefulWidget {
 class _Exercice7ScreenState extends State<Exercice7Screen> {
   bool isPlaying = false;
   late PuzzleGrid _puzzleGrid;
+  late ImageSelection _imageSelection;
   String levelChoosen = difficultyLevels[0];
   int scoreDisplay = 0;
 
@@ -29,12 +31,16 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     super.initState();
     _puzzleGrid =
         PuzzleGrid(key: _puzzleGridKey, displayScoreCallback: displayScore);
+    _imageSelection = ImageSelection(key:_imageSelectionKey, onImageChangeCallback: onImageChange);
   }
 
   void togglePlayStop() {
     setState(() {
       isPlaying = !isPlaying;
     });
+    _puzzleGridKey.currentState!.togglePlayStop();   
+    _imageSelectionKey.currentState!.togglePlayStop();
+     
   }
 
   @override
@@ -47,7 +53,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
       body: Column(
         children: [
           _puzzleGrid,
-          ImageSelection(onImageChangeCallback: onImageChange),
+          _imageSelection,
           DropdownButton(
             value: levelChoosen,
             items: difficultyLevels.map((String value) {
@@ -57,10 +63,12 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
               );
             }).toList(),
             onChanged: (value) {
+              if(isPlaying == false){
               setState(() {
                 levelChoosen = value!;
               });
               updateDifficulty(difficultyLevels.indexOf(value!));
+              }
             },
           ),
           Container(
@@ -83,8 +91,8 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
         ),
         tooltip: isPlaying ? "Play" : "Stop",
         child: isPlaying
-            ? const Icon(Icons.play_arrow_rounded)
-            : const Icon(Icons.stop_circle_rounded),
+            ? const Icon(Icons.stop_circle_rounded)
+            : const Icon(Icons.play_arrow_rounded),
       ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),

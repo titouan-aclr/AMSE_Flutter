@@ -1,7 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:tp2/service/image_tiles_service.dart';
 import 'package:tp2/widgets/image_tile.dart';
@@ -22,6 +19,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
   late List<ImageTile> initialTiles;
   int indexEmpty = 1;
   int difficulty = 30;
+  bool isPlaying = false;
   late ImageTileService imageTileService;
   late int score;
 
@@ -46,7 +44,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
               crossAxisCount: imageTileService.getNbColumns()),
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
-              onTap: () => swapTiles(index),
+              onTap: isPlaying ? () => swapTiles(index) : null,
               child: Padding(
                 padding: const EdgeInsets.all(2),
                 child: Container(
@@ -66,10 +64,12 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   /// FUNCTIONS FOR SHUFFLE
   shuffleTilesDependingOnDifficulty(int difficulty) {
-    score = SCORE_INITIAL;
-    for (int i = 0; i < difficulty; i++) {
-      int randomIndex2 = getRandomAdjacentIndex();
-      swapTiles(randomIndex2);
+    if (isPlaying == false) {
+      score = SCORE_INITIAL;
+      for (int i = 0; i < difficulty; i++) {
+        int randomIndex2 = getRandomAdjacentIndex();
+        swapTiles(randomIndex2);
+      }
     }
   }
 
@@ -133,8 +133,11 @@ class PuzzleGridState extends State<PuzzleGrid> {
         tiles[index] = tempo;
         indexEmpty = index;
       });
-      //updateScore();
-      //checkSuccess();
+      if (isPlaying) {
+        updateScore();
+
+        checkSuccess();
+      }
     }
   }
 
@@ -156,27 +159,34 @@ class PuzzleGridState extends State<PuzzleGrid> {
   }
 
   addColumn() {
-    if (imageTileService.getNbColumns() < 8) {
-      imageTileService.setNbColumns(imageTileService.getNbColumns() + 1);
-      updatePuzzle();
+    if (isPlaying == false) {
+      if (imageTileService.getNbColumns() < 8) {
+        imageTileService.setNbColumns(imageTileService.getNbColumns() + 1);
+        updatePuzzle();
+      }
     }
   }
 
   removeColumn() {
-    if (imageTileService.getNbColumns() > 2) {
-      imageTileService.setNbColumns(imageTileService.getNbColumns() - 1);
-      updatePuzzle();
+    if (isPlaying == false) {
+      if (imageTileService.getNbColumns() > 2) {
+        imageTileService.setNbColumns(imageTileService.getNbColumns() - 1);
+        updatePuzzle();
+      }
     }
   }
 
   updatePuzzle() {
-    setState(() {
-      tiles = imageTileService.getTilesList();
-      if (indexEmpty >= tiles.length) indexEmpty = 0;
-      int idEmpty = tiles[indexEmpty].id;
-      tiles[indexEmpty] = ImageTile(id: idEmpty, empty: true);
-      //shuffleTilesDependingOnDifficulty(difficulty);
-    });
+    if (isPlaying == false) {
+      setState(() {
+        tiles = imageTileService.getTilesList();
+        if (indexEmpty >= tiles.length) indexEmpty = 0;
+        int idEmpty = tiles[indexEmpty].id;
+        tiles[indexEmpty] = ImageTile(id: idEmpty, empty: true);
+        shuffleTilesDependingOnDifficulty(difficulty);
+      });
+    }
+    score = SCORE_INITIAL;
   }
 
   void updateDifficulty(int level) {
@@ -203,10 +213,16 @@ class PuzzleGridState extends State<PuzzleGrid> {
   }
 
   void updateScore() {
-    score = score - PENALITY;
-    print("SCORE :");
-    print(score);
-    widget.displayScoreCallback(score);
+    if (isPlaying == true) {
+      score = score - PENALITY;
+      widget.displayScoreCallback(score);
+    }
+  }
+
+  void togglePlayStop() {
+    setState(() {
+      isPlaying = !isPlaying;
+    });
   }
 
   void resetInitialTiles() {
