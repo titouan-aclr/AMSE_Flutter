@@ -135,8 +135,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
       });
       if (isPlaying) {
         updateScore();
-
-        checkSuccess();
+        print(checkSuccess());
       }
     }
   }
@@ -183,6 +182,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
         if (indexEmpty >= tiles.length) indexEmpty = 0;
         int idEmpty = tiles[indexEmpty].id;
         tiles[indexEmpty] = ImageTile(id: idEmpty, empty: true);
+        resetInitialTiles();
         shuffleTilesDependingOnDifficulty(difficulty);
       });
     }
@@ -231,7 +231,6 @@ class PuzzleGridState extends State<PuzzleGrid> {
 
   bool checkSuccess() {
     for (int i = 0; i < tiles.length; i++) {
-      print("TIles : ${tiles[i].id} et init : ${initialTiles[i].id}");
       if (tiles[i].id != initialTiles[i].id) return false;
     }
     return true;
