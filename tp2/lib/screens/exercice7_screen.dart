@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:tp2/widgets/image_selection.dart';
 import 'package:tp2/widgets/puzzle_grid.dart';
@@ -27,6 +29,9 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   late ImageSelection _imageSelection;
   String levelChoosen = difficultyLevels[0];
   int scoreDisplay = SCORE_INITIAL;
+  final Stopwatch _chronometer = Stopwatch(); 
+  late Timer _timer = Timer(Duration.zero, () { });
+  String _timerDisplay = '00:00'; 
 
   @override
   void initState() {
@@ -45,6 +50,12 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     });
     _puzzleGridKey.currentState!.togglePlayStop();
     _imageSelectionKey.currentState!.togglePlayStop();
+    if(_isPlaying){
+      startTimer();
+    }
+    else{
+      stopTimer();
+    }
   }
 
   @override
@@ -63,7 +74,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
             children: [
               Text('Score : $scoreDisplay',
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.secondary)),
-              Text('Timer : XXX', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.secondary))
+              Text('Timer : $_timerDisplay', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.secondary))
             ],
           ),
           const SizedBox(height: 10),
@@ -135,18 +146,22 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
 
   void onImageChange(String newImageUrl) {
     _puzzleGridKey.currentState?.onImageChange(newImageUrl);
+    resetTimer();
   }
 
   void addColumn() {
     _puzzleGridKey.currentState?.addColumn();
+    resetTimer();
   }
 
   void removeColumn() {
     _puzzleGridKey.currentState?.removeColumn();
+    resetTimer();
   }
 
   void updateDifficulty(int level) {
     _puzzleGridKey.currentState!.updateDifficulty(level);
+    resetTimer();
   }
 
   void displayScore(int score) {
@@ -161,13 +176,16 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
 
   void goBackToStart() {
     _puzzleGridKey.currentState!.goBackToStart();
+    resetTimer();
+    startTimer();
   }
 
   void displaySuccess() {
+    stopTimer();
     showDialog(
       context: context,
       builder: (BuildContext context) =>
-          SuccessDialog(score: scoreDisplay, resetGameCallback: resetGame),
+          SuccessDialog(score: scoreDisplay, chrono: _timerDisplay, resetGameCallback: resetGame),
     );
   }
 
@@ -175,5 +193,28 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     togglePlayStop();
     scoreDisplay = SCORE_INITIAL;
     _puzzleGridKey.currentState!.resetGame();
+    resetTimer();
+  }
+
+  void startTimer(){
+     _timer = Timer.periodic(const Duration(milliseconds: 500), (Timer t) { 
+      setState(() {
+        _timerDisplay = '${_chronometer.elapsed.inMinutes.toString().padLeft(2, '0')}:${(_chronometer.elapsed.inSeconds % 60).toString().padLeft(2, '0')}';
+      });
+     });
+     _chronometer.start();
+  }
+
+  void stopTimer(){
+    _timer.cancel();
+    _chronometer.stop();
+  }
+
+  void resetTimer(){
+    stopTimer();
+    _chronometer.reset();
+    setState(() {
+      _timerDisplay = "00:00";
+     });
   }
 }

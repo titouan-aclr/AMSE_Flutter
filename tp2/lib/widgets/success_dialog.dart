@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 
 class SuccessDialog extends StatelessWidget {
   final int score;
+  final String chrono;
   final Function resetGameCallback;
   const SuccessDialog(
-      {super.key, required this.score, required this.resetGameCallback});
+      {super.key, required this.score, required this.chrono,required this.resetGameCallback});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       child: SizedBox(
-        height: 450,
+        height: 500,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -23,6 +24,8 @@ class SuccessDialog extends StatelessWidget {
             Image.asset('images/good_job_1.gif', height: 200),
             const SizedBox(height: 20),
             Text("Score : $score", style: const TextStyle(fontSize: 30)),
+            const SizedBox(height: 10),
+            Text("Temps : $chrono", style: const TextStyle(fontSize: 30)),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
