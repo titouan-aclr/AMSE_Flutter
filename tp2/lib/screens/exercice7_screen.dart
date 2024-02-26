@@ -11,10 +11,6 @@ const List<String> difficultyLevels = [
   "Légende"
 ];
 
-int score =0;
-
-String levelChoosen = difficultyLevels[0];
-
 class Exercice7Screen extends StatefulWidget {
   const Exercice7Screen({super.key});
 
@@ -25,6 +21,8 @@ class Exercice7Screen extends StatefulWidget {
 class _Exercice7ScreenState extends State<Exercice7Screen> {
   bool isPlaying = false;
   late PuzzleGrid _puzzleGrid;
+  String levelChoosen = difficultyLevels[0];
+  int score = 0;
 
   @override
   void initState() {
@@ -32,8 +30,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     _puzzleGrid = PuzzleGrid(key: _puzzleGridKey);
     if (_puzzleGridKey.currentState != null) {
       score = _puzzleGridKey.currentState!.score;
-    }
-    else {
+    } else {
       score = 10000;
     }
     updateScore();
@@ -44,9 +41,6 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
       isPlaying = !isPlaying;
     });
   }
-
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -60,22 +54,26 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
           _puzzleGrid,
           ImageSelection(onImageChangeCallback: onImageChange),
           DropdownButton(
-              value: levelChoosen,
-              items: difficultyLevels.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (value) {
+            value: levelChoosen,
+            items: difficultyLevels.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (value) {
               setState(() {
-                    levelChoosen = value!;
-                  });
-              int newDifficulty = difficultyManagement(difficultyLevels.indexOf(value!));
-              updatePuzzle();
-              shuffleTilesDependingOnDifficulty(newDifficulty);
-              }),
-              Container(padding: const EdgeInsets.all(10), child: Text('SCORE : $score', style: TextStyle(fontSize: 40.0),)),
+                levelChoosen = value!;
+              });
+              updateDifficulty(difficultyLevels.indexOf(value!));
+            },
+          ),
+          Container(
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                'SCORE : $score',
+                style: TextStyle(fontSize: 40.0),
+              )),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -125,14 +123,8 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
     _puzzleGridKey.currentState?.removeColumn();
   }
 
-  int difficultyManagement(int level) {
-    int newDifficulty = _puzzleGridKey.currentState!.difficultyManagement(level);
-    return newDifficulty;
-    
-  }
-
-  void shuffleTilesDependingOnDifficulty(int difficulty){
-    _puzzleGridKey.currentState?.shuffleTilesDependingOnDifficulty(difficulty);
+  void updateDifficulty(int level) {
+    _puzzleGridKey.currentState!.updateDifficulty(level);
   }
 
   void updateScore() {
@@ -140,10 +132,4 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
       score = _puzzleGridKey.currentState?.score ?? 0;
     });
   }
-
-  void updatePuzzle(){
-    _puzzleGridKey.currentState?.updatePuzzle();
-  }
-
-
 }

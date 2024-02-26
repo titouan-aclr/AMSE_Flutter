@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:tp2/widgets/image_tile.dart';
 
 class ImageTileService {
-  List<ImageTile> tilesList = [];
-  int nbColumns = 3;
-  String imageUrl = 'images/test.jpg';
+  List<ImageTile> _tilesList = [];
+  int _nbColumns = 3;
+  String _imageUrl = 'images/test.jpg';
 
   /// CONSTRUCTOR
   ImageTileService() {
@@ -13,28 +13,28 @@ class ImageTileService {
 
   /// GETTERS AND SETTERS
   List<ImageTile> getTilesList() {
-    return tilesList;
+    return _tilesList;
   }
 
   void setTilesList(List<ImageTile> list) {
-    tilesList = list;
+    _tilesList = list;
   }
 
   int getNbColumns() {
-    return nbColumns;
+    return _nbColumns;
   }
 
   void setNbColumns(int nbOfColumns) {
-    nbColumns = nbOfColumns;
+    _nbColumns = nbOfColumns;
     _splitImageIntoTiles();
   }
 
   String getImageUrl() {
-    return imageUrl;
+    return _imageUrl;
   }
 
   void setImageUrl(String newImageUrl) {
-    imageUrl = newImageUrl;
+    _imageUrl = newImageUrl;
     _splitImageIntoTiles();
   }
 
@@ -43,8 +43,8 @@ class ImageTileService {
     List<double> result = [];
     double temp = 0;
 
-    for (int i = 0; i < nbColumns; i++) {
-      temp = ((2 * i) / (nbColumns - 1)) - 1;
+    for (int i = 0; i < _nbColumns; i++) {
+      temp = ((2 * i) / (_nbColumns - 1)) - 1;
       result.add(temp);
     }
     return result;
@@ -52,15 +52,15 @@ class ImageTileService {
 
   void _splitImageIntoTiles() {
     List<double> indexes = _computeIndexes();
-    tilesList = [];
+    _tilesList = [];
 
     for (var y in indexes) {
       for (var x in indexes) {
-        tilesList.add(
+        _tilesList.add(
           ImageTile(
-            factor: 1 / nbColumns,
+            factor: 1 / _nbColumns,
             alignment: Alignment(x, y),
-            imageUrl: imageUrl,
+            imageUrl: _imageUrl,
           ),
         );
       }

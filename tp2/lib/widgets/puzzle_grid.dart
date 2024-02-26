@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:tp2/service/image_tiles_service.dart';
 import 'package:tp2/widgets/image_tile.dart';
 
+const int scoreInitialValue = 10000;
+
 class PuzzleGrid extends StatefulWidget {
   const PuzzleGrid({super.key});
 
@@ -19,16 +21,15 @@ class PuzzleGridState extends State<PuzzleGrid> {
   int difficulty = 30;
   List difficultyLevels = ["Débutant", "Confirmé", "Expert", "Légende"];
   late ImageTileService imageTileService;
-  late int score; 
-  int penality = 200; 
-  int score_initialValue = 10000;
+  late int score;
+  int penality = 200;
 
   @override
   void initState() {
     imageTileService = ImageTileService();
     tiles = imageTileService.getTilesList();
-    score = score_initialValue;
-    difficultyManagement(0);
+    score = scoreInitialValue;
+    updateDifficulty(0);
     shuffleTilesDependingOnDifficulty(difficulty);
     super.initState();
   }
@@ -66,7 +67,7 @@ class PuzzleGridState extends State<PuzzleGrid> {
   /// FUNCTIONS FOR SHUFFLE
   shuffleTilesDependingOnDifficulty(int difficulty) {
     tiles = imageTileService.getTilesList();
-    score = score_initialValue;
+    score = scoreInitialValue;
     for (int i = 0; i < difficulty; i++) {
       int randomIndex2 = getRandomAdjacentIndex();
       swapTiles(randomIndex2);
@@ -179,28 +180,33 @@ class PuzzleGridState extends State<PuzzleGrid> {
     });
   }
 
-  int difficultyManagement(int level){
+  void updateDifficulty(int level) {
     int nbColumns = imageTileService.getNbColumns();
-    if(level == 0){
-      difficulty  =  nbColumns * 20;
+
+    switch (level) {
+      case 0:
+        difficulty = nbColumns * 20;
+        break;
+      case 1:
+        difficulty = nbColumns * 20;
+        break;
+      case 2:
+        difficulty = nbColumns * 20;
+        break;
+      case 3:
+        difficulty = nbColumns * 20;
+        break;
+      default:
+        difficulty = nbColumns * 20;
     }
-    if(level == 1){
-      difficulty  =  nbColumns * 60;
-    }
-    if(level == 2){
-      difficulty  =  nbColumns * 100;
-    }
-    if(level == 3){
-      difficulty  =  nbColumns * 500;
-    }
-    return difficulty;
+
+    updatePuzzle();
   }
 
-  int getNewScore(){
-    score = score -penality;
+  int getNewScore() {
+    score = score - penality;
     print("SCORE :");
     print(score);
-    return score; 
+    return score;
   }
-
 }
