@@ -13,7 +13,7 @@ class ImageSelectionState extends State<ImageSelection> {
   List<String> imagesUrl = [
     'images/test.jpg',
     'images/montagne.jpg',
-    'images/dauphins.jpg'
+    'images/dolphin-happy.gif'
   ];
   late List<ImageButton> list;
   int selectedImage = 0;

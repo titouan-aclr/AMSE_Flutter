@@ -167,6 +167,7 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
   void displayScore(int score) {
     setState(() {
       scoreDisplay = score;
+      
     });
   }
 
@@ -217,4 +218,5 @@ class _Exercice7ScreenState extends State<Exercice7Screen> {
       _timerDisplay = "00:00";
      });
   }
+
 }
