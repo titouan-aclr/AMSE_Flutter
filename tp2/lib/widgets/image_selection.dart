@@ -17,7 +17,7 @@ class ImageSelectionState extends State<ImageSelection> {
   ];
   late List<ImageButton> list;
   int selectedImage = 0;
-  bool isPlaying = false; 
+  bool _isPlaying = false;
 
   @override
   void initState() {
@@ -46,18 +46,27 @@ class ImageSelectionState extends State<ImageSelection> {
   }
 
   void onImageButtonPressed(int idSelected) {
-    if(!isPlaying) {
+    if (!_isPlaying) {
       setState(() {
         selectedImage = idSelected;
         populateList();
       });
       widget.onImageChangeCallback(imagesUrl[idSelected]);
+    } else {
+      showPlayingToast();
     }
   }
 
   void togglePlayStop() {
     setState(() {
-      isPlaying = !isPlaying;
+      _isPlaying = !_isPlaying;
     });
+  }
+
+  void showPlayingToast() {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Vous ne pouvez pas modifier les paramètres en jeu..."),
+      behavior: SnackBarBehavior.floating,
+    ));
   }
 }

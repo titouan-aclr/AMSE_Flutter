@@ -41,28 +41,45 @@ class PuzzleGridState extends State<PuzzleGrid> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        height: 450,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: GridView.builder(
-          itemCount: tiles.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: imageTileService.getNbColumns()),
-          itemBuilder: (BuildContext context, int index) {
-            return InkWell(
-              onTap: isPlaying ? () => swapTiles(index) : null,
-              child: Padding(
-                padding: const EdgeInsets.all(2),
-                child: Container(
-                  color: _isAdjacent(index, indexEmpty)
-                      ? Colors.red
-                      : Colors.white,
-                  padding: const EdgeInsets.all(2),
-                  child: tiles[index].croppedImageTile(),
-                ),
-              ),
-            );
-          },
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 50),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+            height: MediaQuery.of(context).size.width - 20,
+            padding: const EdgeInsets.all(10),
+            child: GridView.builder(
+              itemCount: tiles.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: imageTileService.getNbColumns()),
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  onTap:
+                      isPlaying ? () => swapTiles(index) : showNotPlayingToast,
+                  child: Padding(
+                    padding: const EdgeInsets.all(1),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        color: _isAdjacent(index, indexEmpty)
+                            ? Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.7)
+                            : Colors.transparent,
+                        padding: const EdgeInsets.all(4),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: tiles[index].croppedImageTile(),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
@@ -272,5 +289,12 @@ class PuzzleGridState extends State<PuzzleGrid> {
       score = SCORE_INITIAL;
       widget.displayScoreCallback(score);
     }
+  }
+
+  void showNotPlayingToast() {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Jeu en pause..."),
+      behavior: SnackBarBehavior.floating,
+    ));
   }
 }
