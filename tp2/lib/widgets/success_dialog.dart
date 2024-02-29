@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tp2/widgets/puzzle_grid.dart';
 
 class SuccessDialog extends StatelessWidget {
   final int score;
@@ -29,6 +30,10 @@ class SuccessDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset('images/good_job_1.gif', height: 200)),
             const SizedBox(height: 20),
+            Text("Pénalités de déplacement : ${SCORE_INITIAL - score} points", style: const TextStyle(fontSize: 10)),
+            const SizedBox(height: 5),
+            Text("Pénalités de temps : ${int.parse(chrono.substring(0,2)) * 2} points", style: const TextStyle(fontSize: 10)),
+            const SizedBox(height: 5),
             Text("Score : $score", style: const TextStyle(fontSize: 30)),
             const SizedBox(height: 10),
             Text("Temps : $chrono", style: const TextStyle(fontSize: 30)),
@@ -60,5 +65,14 @@ class SuccessDialog extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  int calculateMovementPenalities(){
+    return SCORE_INITIAL - score;
+  }
+
+  int calculateTimePenalities(){
+    int minutes = int.parse(chrono.substring(0,2));
+    return minutes * 2; 
   }
 }

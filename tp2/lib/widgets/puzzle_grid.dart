@@ -4,7 +4,7 @@ import 'package:tp2/service/image_tiles_service.dart';
 import 'package:tp2/widgets/image_tile.dart';
 
 const int SCORE_INITIAL = 10000;
-const int PENALITY = 200;
+const int PENALITY = 3;
 
 class PuzzleGrid extends StatefulWidget {
   final Function displayScoreCallback;
